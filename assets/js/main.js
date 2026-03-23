@@ -1,0 +1,1 @@
+console.log("Nihon Gateway loaded");
