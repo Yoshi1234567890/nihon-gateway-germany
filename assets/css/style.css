@@ -88,3 +88,19 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   margin: 24px 0 40px;
 }
+.hero {
+    background: linear-gradient(135deg, #fff7f2, #f7f9fc);
+    border-radius: 18px;
+    padding: 32px;
+    margin-bottom: 32px;
+}
+
+.card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.site-header {
+    background: linear-gradient(135deg, #fff4f4, #f4f8ff);
+}
