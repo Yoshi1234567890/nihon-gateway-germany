@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duesseldorf</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デュッセルドルフ | Nihon Gateway</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#e8002d;
+  --orange:#ff6b2b;
+  --yellow:#ffc93c;
+  --teal:#00b4a6;
+  --blue:#2f6df5;
+  --purple:#7c3aed;
+  --cream:#fdf8f2;
+  --ink:#1a1014;
+  --muted:#6b5e68;
+  --border:#ede5e0;
+}
+body{
+  font-family:'Outfit','Noto Sans JP',sans-serif;
+  background:var(--cream);
+  margin:0;
+}
+
+/* NAV */
+.nav{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:12px 24px;
+  display:flex;
+  justify-content:space-between;
+}
+.nav a{
+  text-decoration:none;
+  font-weight:900;
+  color:var(--ink);
+}
+
+/* HERO */
+.hero{
+  padding:30px 24px;
+  background:#fff;
+}
+.hero h1{
+  font-size:28px;
+  margin-bottom:10px;
+}
+.hero p{
+  color:var(--muted);
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  padding:24px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  text-decoration:none;
+  color:var(--ink);
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  transition:.2s;
+}
+.card:hover{
+  transform:translateY(-4px);
+}
+
+/* responsive */
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:500px){
+  .grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
+
 <body>
-  <h1>Duesseldorf</h1>
+
+<div class="nav">
+  <a href="../../index.html">NIHON GATEWAY</a>
+  <span>デュッセルドルフ</span>
+</div>
+
+<div class="hero">
+  <h1>デュッセルドルフ情報</h1>
+  <p>カテゴリ別に生活・観光・仕事・医療などの情報を探せます</p>
+</div>
+
+<div class="grid">
+
+<a class="card" href="./events/">🎉 Events</a>
+<a class="card" href="./eat/">🍜 Eat</a>
+<a class="card" href="./shop/">🛍️ Shop</a>
+<a class="card" href="./services/">🧾 Services</a>
+<a class="card" href="./living/">🏠 Living</a>
+<a class="card" href="./jobs/">💼 Jobs</a>
+<a class="card" href="./community/">🤝 Community</a>
+<a class="card" href="./healthcare/">🏥 Healthcare</a>
+<a class="card" href="./sports/">⚽ Sports</a>
+<a class="card" href="./tourism/">📍 Tourism</a>
+<a class="card" href="./transport/">🚆 Transport</a>
+<a class="card" href="./emergency/">🚨 Emergency</a>
+
+</div>
+
 </body>
 </html>
