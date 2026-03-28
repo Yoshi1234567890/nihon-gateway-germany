@@ -1,28 +1,4 @@
-from pathlib import Path
-import zipfile, os, textwrap, json, re
-
-base = Path('/mnt/data/nihon_gateway_bundle')
-if base.exists():
-    import shutil
-    shutil.rmtree(base)
-(base / 'ja' / 'cities' / 'duesseldorf').mkdir(parents=True, exist_ok=True)
-
-cats = [
-    ("events","Events","デュッセルドルフのイベント","🎉"),
-    ("eat","Eat","デュッセルドルフのレストラン・カフェ","🍜"),
-    ("shop","Shop","デュッセルドルフの買い物・ショップ","🛍️"),
-    ("services","Services","デュッセルドルフのサービス","🧾"),
-    ("living","Living","デュッセルドルフの生活情報","🏠"),
-    ("jobs","Jobs","デュッセルドルフの求人・仕事","💼"),
-    ("community","Community","デュッセルドルフのコミュニティ","🤝"),
-    ("healthcare","Healthcare","デュッセルドルフの医療情報","🏥"),
-    ("sports","Sports","デュッセルドルフのスポーツ・運動","⚽"),
-    ("tourism","Tourism","デュッセルドルフの観光","📍"),
-    ("transport","Transport","デュッセルドルフの交通情報","🚆"),
-    ("emergency","Emergency","デュッセルドルフの緊急時情報","🚨"),
-]
-
-index_html = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -71,21 +47,16 @@ body{font-family:'Outfit','Noto Sans JP',sans-serif;background:var(--cream);colo
 <nav class="nav"><a class="nav-logo" href="../../index.html">NIHON <span>GATEWAY</span></a><div class="nav-bc">トップ › 都市 › <strong>デュッセルドルフ</strong></div></nav>
 <div class="hero"><div class="hero-text"><div class="hero-pill"><span class="hero-pill-dot"></span> Düsseldorf City Guide</div><h1><span class="c-red">デュッセルドルフ</span>の情報を、<br><span class="c-teal">カテゴリ別</span>にまとめて探す。</h1><p class="hero-desc">イベント、レストラン、買い物、生活インフラ、医療、交通、緊急時対応まで。デュッセルドルフで必要になる情報を、見つけやすいカード形式で整理しました。</p><div class="hero-stats"><div class="stat-chip"><span class="sn">12</span><span class="sl">カテゴリ</span></div><div class="stat-chip"><span class="sn">NRW</span><span class="sl">主要都市</span></div><div class="stat-chip"><span class="sn">日本語</span><span class="sl">ポータル</span></div></div></div></div>
 <div class="page-body"><div class="sec-head"><div class="sec-tag">カテゴリ</div><span class="sec-head-label">デュッセルドルフ内の情報を選ぶ</span><div class="sec-head-line"></div></div><div class="cat-grid">
-""" + "\n".join([
-f'''<a class="cat-card cc-{slug}" href="./{slug}/"><div class="cat-icon-wrap">{icon}</div><div class="cat-title">{label}</div><div class="cat-sub">{title}をカード一覧・検索付きで探せます。</div><div class="cat-path">/{slug}/</div></a>'''
-for slug,label,title,icon in cats
-]) + """
+<a class="cat-card cc-events" href="./events/"><div class="cat-icon-wrap">🎉</div><div class="cat-title">Events</div><div class="cat-sub">デュッセルドルフのイベントをカード一覧・検索付きで探せます。</div><div class="cat-path">/events/</div></a>
+<a class="cat-card cc-eat" href="./eat/"><div class="cat-icon-wrap">🍜</div><div class="cat-title">Eat</div><div class="cat-sub">デュッセルドルフのレストラン・カフェをカード一覧・検索付きで探せます。</div><div class="cat-path">/eat/</div></a>
+<a class="cat-card cc-shop" href="./shop/"><div class="cat-icon-wrap">🛍️</div><div class="cat-title">Shop</div><div class="cat-sub">デュッセルドルフの買い物・ショップをカード一覧・検索付きで探せます。</div><div class="cat-path">/shop/</div></a>
+<a class="cat-card cc-services" href="./services/"><div class="cat-icon-wrap">🧾</div><div class="cat-title">Services</div><div class="cat-sub">デュッセルドルフのサービスをカード一覧・検索付きで探せます。</div><div class="cat-path">/services/</div></a>
+<a class="cat-card cc-living" href="./living/"><div class="cat-icon-wrap">🏠</div><div class="cat-title">Living</div><div class="cat-sub">デュッセルドルフの生活情報をカード一覧・検索付きで探せます。</div><div class="cat-path">/living/</div></a>
+<a class="cat-card cc-jobs" href="./jobs/"><div class="cat-icon-wrap">💼</div><div class="cat-title">Jobs</div><div class="cat-sub">デュッセルドルフの求人・仕事をカード一覧・検索付きで探せます。</div><div class="cat-path">/jobs/</div></a>
+<a class="cat-card cc-community" href="./community/"><div class="cat-icon-wrap">🤝</div><div class="cat-title">Community</div><div class="cat-sub">デュッセルドルフのコミュニティをカード一覧・検索付きで探せます。</div><div class="cat-path">/community/</div></a>
+<a class="cat-card cc-healthcare" href="./healthcare/"><div class="cat-icon-wrap">🏥</div><div class="cat-title">Healthcare</div><div class="cat-sub">デュッセルドルフの医療情報をカード一覧・検索付きで探せます。</div><div class="cat-path">/healthcare/</div></a>
+<a class="cat-card cc-sports" href="./sports/"><div class="cat-icon-wrap">⚽</div><div class="cat-title">Sports</div><div class="cat-sub">デュッセルドルフのスポーツ・運動をカード一覧・検索付きで探せます。</div><div class="cat-path">/sports/</div></a>
+<a class="cat-card cc-tourism" href="./tourism/"><div class="cat-icon-wrap">📍</div><div class="cat-title">Tourism</div><div class="cat-sub">デュッセルドルフの観光をカード一覧・検索付きで探せます。</div><div class="cat-path">/tourism/</div></a>
+<a class="cat-card cc-transport" href="./transport/"><div class="cat-icon-wrap">🚆</div><div class="cat-title">Transport</div><div class="cat-sub">デュッセルドルフの交通情報をカード一覧・検索付きで探せます。</div><div class="cat-path">/transport/</div></a>
+<a class="cat-card cc-emergency" href="./emergency/"><div class="cat-icon-wrap">🚨</div><div class="cat-title">Emergency</div><div class="cat-sub">デュッセルドルフの緊急時情報をカード一覧・検索付きで探せます。</div><div class="cat-path">/emergency/</div></a>
 </div></div><footer class="page-footer"><div class="footer-logo">NIHON <span>GATEWAY</span></div><div class="footer-copy">© 2026 Nihon Gateway · Düsseldorf City Guide</div></footer></body></html>
-"""
-
-(base / 'ja' / 'cities' / 'duesseldorf' / 'index.html').write_text(index_html, encoding='utf-8')
-
-zip_path = Path('/mnt/data/nihon_gateway_duesseldorf_bundle_with_index.zip')
-if zip_path.exists():
-    zip_path.unlink()
-with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
-    for p in base.rglob('*'):
-        if p.is_file():
-            z.write(p, p.relative_to(base))
-
-print(zip_path)
