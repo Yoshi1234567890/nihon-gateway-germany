@@ -1,1 +1,1 @@
-console.log("Nihon Gateway loaded");
+console.log("Nihon Gateway Germany loaded");
