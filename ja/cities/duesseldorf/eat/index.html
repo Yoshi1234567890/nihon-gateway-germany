@@ -530,6 +530,16 @@
           </select>
         </div>
 
+        <div class="field">
+  <label class="label" for="starRatingSelect">星評価</label>
+  <select id="starRatingSelect" class="select">
+    <option value="">すべて</option>
+    <option value="4.5">★★★★☆以上</option>
+    <option value="4.0">★★★★以上</option>
+    <option value="3.5">★★★☆以上</option>
+    <option value="3.0">★★★以上</option>
+  </select>
+</div>
         <div class="filter-help">
           カテゴリを選ぶと、詳細カテゴリの候補が自動で絞り込まれます。
         </div>
@@ -573,6 +583,7 @@
       category1Select: document.getElementById("category1Select"),
       category2Select: document.getElementById("category2Select"),
       ratingSelect: document.getElementById("ratingSelect"),
+      starRatingSelect: document.getElementById("starRatingSelect"),
       resetFiltersBtn: document.getElementById("resetFiltersBtn"),
       resultsSummary: document.getElementById("resultsSummary"),
       activeChips: document.getElementById("activeChips"),
@@ -716,6 +727,7 @@
       const category1 = els.category1Select.value;
       const category2 = els.category2Select.value;
       const minReviews = parseNumber(els.ratingSelect.value) || 0;
+const minStarRating = parseFloat(els.starRatingSelect.value) || 0;
 
       filteredItems = rawItems.filter(item => {
         const matchesKeyword = !keyword || buildSearchText(item).includes(keyword);
@@ -723,7 +735,9 @@
         const matchesCategory2 = !category2 || getCategory2(item) === category2;
         const reviews = parseNumber(getField(item, "reviewsCount")) || 0;
         const matchesReviews = !minReviews || reviews >= minReviews;
-        return matchesKeyword && matchesCategory1 && matchesCategory2 && matchesReviews;
+        const score = parseFloat(getField(item, "totalScore")) || 0;
+const matchesStarRating = !minStarRating || score >= minStarRating;
+        return matchesKeyword && matchesCategory1 && matchesCategory2 && matchesReviews && matchesStarRating;
       });
 
       filteredItems = sortItems(filteredItems);
@@ -738,6 +752,7 @@
       if (els.category1Select.value) chips.push(`カテゴリ: ${escapeHtml(els.category1Select.value)}`);
       if (els.category2Select.value) chips.push(`詳細カテゴリ: ${escapeHtml(els.category2Select.value)}`);
       if (els.ratingSelect.value) chips.push(`レビュー数: ${escapeHtml(els.ratingSelect.options[els.ratingSelect.selectedIndex].text)}`);
+      if (els.starRatingSelect.value) {chips.push(`星評価: ${escapeHtml(els.starRatingSelect.options[els.starRatingSelect.selectedIndex].text)}`);}
       els.activeChips.innerHTML = chips.map(c => `<span class="chip">${c}</span>`).join("");
     }
 
@@ -796,8 +811,10 @@
               </div>
 
               <div class="meta-list">
+                ${category1 ? `<div class="meta-item"><div class="meta-label">カテゴリ</div><div class="meta-value">${escapeHtml(category1)}</div></div>` : ""}
+                ${category2 ? `<div class="meta-item"><div class="meta-label">詳細カテゴリ</div><div class="meta-value">${escapeHtml(category2)}</div></div>` : ""}
+                ${price ? `<div class="meta-item"><div class="meta-label">価格</div><div class="meta-value">${escapeHtml(price)}</div></div>` : ""}
                 ${address ? `<div class="meta-item"><div class="meta-label">住所</div><div class="meta-value">${escapeHtml(address)}</div></div>` : ""}
-                ${phone ? `<div class="meta-item"><div class="meta-label">電話番号</div><div class="meta-value">${escapeHtml(phone)}</div></div>` : ""}
                 ${description ? `<div class="meta-item"><div class="meta-label">説明</div><div class="meta-value">${escapeHtml(description)}</div></div>` : ""}
               </div>
 
@@ -816,6 +833,7 @@
       els.category1Select.value = "";
       els.category2Select.value = "";
       els.ratingSelect.value = "";
+      els.starRatingSelect.value = "";
       updateCategory2Options();
       filterItems();
     }
@@ -858,6 +876,7 @@
     els.category1Select.addEventListener("change", () => { updateCategory2Options(); filterItems(); });
     els.category2Select.addEventListener("change", filterItems);
     els.ratingSelect.addEventListener("change", filterItems);
+    els.starRatingSelect.addEventListener("change", filterItems);
     els.resetFiltersBtn.addEventListener("click", resetFilters);
 
     loadData();
