@@ -268,6 +268,7 @@
         priceRange: normalizeText(item.price_range || item.price || item.priceRange),
         totalScore: normalizeNumber(item.totalScore),
         reviewsCount: normalizeNumber(item.reviewsCount),
+        priority: Number.isFinite(Number(item.priority)) ? Number(item.priority) : 9999,
         status: normalizeText(item.status).toLowerCase(),
         updatedAt: normalizeText(item.updated_at || item.updatedAt),
         tags: [...new Set(tagList)]
@@ -416,12 +417,15 @@
           .filter(item => item.name)
           .filter(item => !item.city || item.city === normalizeCityKey(PAGE_CONFIG.city))
           .filter(item => isVisibleStatus(item.status))
-          .sort((a,b) => {
-            const scoreA = a.totalScore ?? -1;
-            const scoreB = b.totalScore ?? -1;
-            if(scoreB !== scoreA) return scoreB - scoreA;
-            return a.name.localeCompare(b.name, "ja");
-          });
+.sort((a,b) => {
+  if (a.priority !== b.priority) return a.priority - b.priority;
+
+  const scoreA = a.totalScore ?? -1;
+  const scoreB = b.totalScore ?? -1;
+  if (scoreB !== scoreA) return scoreB - scoreA;
+
+  return a.name.localeCompare(b.name, "ja");
+});
 
         fillCategoryFilter(allItems);
 
