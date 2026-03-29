@@ -265,7 +265,7 @@
         website: normalizeText(item.website),
         mapUrl: normalizeText(item.map_url || item.mapUrl || item.url),
         openingHours: normalizeText(item.opening_hours || item.openingHours),
-        priceRange: normalizeText(item.price_range || item.price || item.priceRange),
+        priceRange: normalizeText(item.price || item.price || item.priceRange),
         totalScore: normalizeNumber(item.totalScore),
         reviewsCount: normalizeNumber(item.reviewsCount),
         priority: Number.isFinite(Number(item.priority)) ? Number(item.priority) : 9999,
