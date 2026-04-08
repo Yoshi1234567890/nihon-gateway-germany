@@ -459,15 +459,17 @@ button,input,select{font:inherit;}
   z-index:1;
   display:flex;
   flex-direction:column;
+  align-items:center;
   height:100%;
   padding:18px;
 }
 .cat-top{
+  width:100%;
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:14px;
+  margin-bottom:10px;
 }
 .cat-icon{
   width:48px;
@@ -502,6 +504,15 @@ button,input,select{font:inherit;}
 }
 .badge.city{display:none;}
 .cat-card.city-dependent .badge.city{display:inline-flex;}
+
+.cat-content{
+  margin:auto 0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
 .cat-kicker{
   font-size:11px;
   font-weight:800;
@@ -509,6 +520,7 @@ button,input,select{font:inherit;}
   text-transform:uppercase;
   color:rgba(255,255,255,.78);
   margin-bottom:8px;
+  text-align:center;
 }
 .cat-title{
   font-size:24px;
@@ -516,6 +528,7 @@ button,input,select{font:inherit;}
   font-weight:800;
   margin-bottom:10px;
   text-shadow:0 2px 8px rgba(0,0,0,.20);
+  text-align:center;
 }
 .cat-desc{
   color:rgba(255,255,255,.92);
@@ -523,12 +536,14 @@ button,input,select{font:inherit;}
   line-height:1.7;
   max-width:34ch;
   text-shadow:0 1px 4px rgba(0,0,0,.18);
+  text-align:center;
 }
 .cat-meta{
   margin-top:14px;
   display:flex;
   flex-wrap:wrap;
   gap:8px;
+  justify-content:center;
 }
 .meta-chip{
   display:inline-flex;
@@ -547,8 +562,9 @@ button,input,select{font:inherit;}
   padding-top:18px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:center;
   gap:12px;
+  width:100%;
 }
 .cat-link{
   font-size:14px;
@@ -606,30 +622,6 @@ button,input,select{font:inherit;}
 .cat-news{
   --cat-color:var(--cat-news);
   background-image:url('../assets/images/cards/news.jpg');
-}
-
-/* utility strip */
-.utility-strip{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-.utility-card{
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(230,234,240,.95);
-  border-radius:18px;
-  padding:16px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(4px);
-}
-.utility-card h3{
-  font-size:15px;
-  margin-bottom:6px;
-}
-.utility-card p{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
 }
 
 /* Footer */
@@ -703,7 +695,6 @@ button,input,select{font:inherit;}
     grid-column:span 12;
     min-height:220px;
   }
-  .utility-strip{grid-template-columns:1fr 1fr;}
 }
 @media (max-width:560px){
   body{
@@ -726,8 +717,8 @@ button,input,select{font:inherit;}
     overflow-x:auto;
     padding-bottom:4px;
   }
-  .utility-strip{grid-template-columns:1fr;}
   .cat-title{font-size:21px;}
+  .cat-desc{max-width:30ch;}
 }
 </style>
 
@@ -873,13 +864,15 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge">生活開始時に便利</span>
               </div>
             </div>
-            <div class="cat-kicker">Guides</div>
-            <div class="cat-title">手続き・制度</div>
-            <div class="cat-desc">Anmeldung、ビザ、保険、税金、契約など、生活立ち上げや継続に必要な制度と手続きを確認。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">Anmeldung</span>
-              <span class="meta-chip">保険</span>
-              <span class="meta-chip">ビザ</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Guides</div>
+              <div class="cat-title">手続き・制度</div>
+              <div class="cat-desc">Anmeldung、ビザ、保険、税金、契約など、生活立ち上げや継続に必要な制度と手続きを確認。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">Anmeldung</span>
+                <span class="meta-chip">保険</span>
+                <span class="meta-chip">ビザ</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -896,13 +889,15 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge">毎日使う</span>
               </div>
             </div>
-            <div class="cat-kicker">Living</div>
-            <div class="cat-title">住まい・生活</div>
-            <div class="cat-desc">住まい探し、交通、生活の立ち上げ、日用品、暮らしの基礎情報をまとめて確認。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">住居</span>
-              <span class="meta-chip">交通</span>
-              <span class="meta-chip">生活情報</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Living</div>
+              <div class="cat-title">住まい・生活</div>
+              <div class="cat-desc">住まい探し、交通、生活の立ち上げ、日用品、暮らしの基礎情報をまとめて確認。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">住居</span>
+                <span class="meta-chip">交通</span>
+                <span class="meta-chip">生活情報</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -919,12 +914,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Jobs</div>
-            <div class="cat-title">仕事・求人</div>
-            <div class="cat-desc">求人、転職、アルバイト、日本語関連の仕事や働き方の情報を探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">求人</span>
-              <span class="meta-chip">転職</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Jobs</div>
+              <div class="cat-title">仕事・求人</div>
+              <div class="cat-desc">求人、転職、アルバイト、日本語関連の仕事や働き方の情報を探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">求人</span>
+                <span class="meta-chip">転職</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -941,12 +938,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Medical</div>
-            <div class="cat-title">医療・緊急</div>
-            <div class="cat-desc">病院、歯科、薬局、緊急時の対応先や受診時に必要な情報を確認。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">病院</span>
-              <span class="meta-chip">薬局</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Medical</div>
+              <div class="cat-title">医療・緊急</div>
+              <div class="cat-desc">病院、歯科、薬局、緊急時の対応先や受診時に必要な情報を確認。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">病院</span>
+                <span class="meta-chip">薬局</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -963,12 +962,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Eat</div>
-            <div class="cat-title">食べる</div>
-            <div class="cat-desc">日本食、ラーメン、カフェ、ランチ、居酒屋など外食スポットを探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">日本食</span>
-              <span class="meta-chip">ランチ</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Eat</div>
+              <div class="cat-title">食べる</div>
+              <div class="cat-desc">日本食、ラーメン、カフェ、ランチ、居酒屋など外食スポットを探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">日本食</span>
+                <span class="meta-chip">ランチ</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -985,12 +986,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Shopping</div>
-            <div class="cat-title">買い物・サービス</div>
-            <div class="cat-desc">スーパー、アジアショップ、薬局、日用品店、生活サービスを探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">スーパー</span>
-              <span class="meta-chip">生活サービス</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Shopping</div>
+              <div class="cat-title">買い物・サービス</div>
+              <div class="cat-desc">スーパー、アジアショップ、薬局、日用品店、生活サービスを探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">スーパー</span>
+                <span class="meta-chip">生活サービス</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -1007,12 +1010,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Board</div>
-            <div class="cat-title">交流・掲示板</div>
-            <div class="cat-desc">売ります・買います、相談、募集、地域交流などコミュニティ情報を探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">募集</span>
-              <span class="meta-chip">相談</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Board</div>
+              <div class="cat-title">交流・掲示板</div>
+              <div class="cat-desc">売ります・買います、相談、募集、地域交流などコミュニティ情報を探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">募集</span>
+                <span class="meta-chip">相談</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -1029,12 +1034,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge city">デュッセルドルフ</span>
               </div>
             </div>
-            <div class="cat-kicker">Events</div>
-            <div class="cat-title">おでかけ・イベント</div>
-            <div class="cat-desc">イベント、観光、週末のおでかけ先、季節イベントや地域情報を探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">週末</span>
-              <span class="meta-chip">イベント</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Events</div>
+              <div class="cat-title">おでかけ・イベント</div>
+              <div class="cat-desc">イベント、観光、週末のおでかけ先、季節イベントや地域情報を探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">週末</span>
+                <span class="meta-chip">イベント</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -1051,12 +1058,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge">学習</span>
               </div>
             </div>
-            <div class="cat-kicker">Learn</div>
-            <div class="cat-title">ドイツ語・学び</div>
-            <div class="cat-desc">生活や仕事で使うドイツ語、学習法、勉強リソースを探す。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">ドイツ語</span>
-              <span class="meta-chip">学習法</span>
+            <div class="cat-content">
+              <div class="cat-kicker">Learn</div>
+              <div class="cat-title">ドイツ語・学び</div>
+              <div class="cat-desc">生活や仕事で使うドイツ語、学習法、勉強リソースを探す。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">ドイツ語</span>
+                <span class="meta-chip">学習法</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -1073,12 +1082,14 @@ gtag('config', 'G-0300YC5NF8');
                 <span class="badge">更新情報</span>
               </div>
             </div>
-            <div class="cat-kicker">News</div>
-            <div class="cat-title">ニュース・読みもの</div>
-            <div class="cat-desc">制度変更、生活関連トピック、現地ニュース、日本関連情報や読みものを確認。</div>
-            <div class="cat-meta">
-              <span class="meta-chip">制度変更</span>
-              <span class="meta-chip">生活情報</span>
+            <div class="cat-content">
+              <div class="cat-kicker">News</div>
+              <div class="cat-title">ニュース・読みもの</div>
+              <div class="cat-desc">制度変更、生活関連トピック、現地ニュース、日本関連情報や読みものを確認。</div>
+              <div class="cat-meta">
+                <span class="meta-chip">制度変更</span>
+                <span class="meta-chip">生活情報</span>
+              </div>
             </div>
             <div class="cat-foot">
               <div class="cat-link">カテゴリを見る</div>
@@ -1086,35 +1097,6 @@ gtag('config', 'G-0300YC5NF8');
             </div>
           </div>
         </a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title-wrap">
-          <div class="section-kicker">Useful</div>
-          <h2 class="section-title">使いやすさを高める導線</h2>
-          <p class="section-desc">トップページの役割を絞り、探す・切り替える・入る、の3ステップを最短化しています。</p>
-        </div>
-      </div>
-
-      <div class="utility-strip">
-        <div class="utility-card">
-          <h3>都市切替を常時保持</h3>
-          <p>選択した都市は保存され、次回アクセス時にも同じ都市で開始できます。</p>
-        </div>
-        <div class="utility-card">
-          <h3>検索を主導線化</h3>
-          <p>装飾よりも検索導線を優先し、探したい情報へ早く到達できる構成にしています。</p>
-        </div>
-        <div class="utility-card">
-          <h3>カテゴリ構造を統一</h3>
-          <p>すべてのカードを同じ構造にそろえ、視線移動と判断コストを下げています。</p>
-        </div>
-        <div class="utility-card">
-          <h3>スマホ利用を前提</h3>
-          <p>モバイルでもボタンやカードが押しやすく、読みやすい余白とサイズにしています。</p>
-        </div>
       </div>
     </section>
 
