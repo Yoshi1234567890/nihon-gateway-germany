@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const s=document.getElementById('languageSelect');if(s){s.addEventListener('change',e=>{if(e.target.value) location.href=e.target.value;});}});
