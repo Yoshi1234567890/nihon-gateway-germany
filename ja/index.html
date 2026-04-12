@@ -23,6 +23,7 @@
   --muted-2:#7d8893;
   --brand:#d84b6a;
   --brand-dark:#bc3856;
+  --hover-pink:#f7d6df;
   --accent:#2f80ed;
   --shadow:0 8px 28px rgba(19,35,58,.08);
   --shadow-hover:0 18px 42px rgba(19,35,58,.12);
@@ -130,6 +131,12 @@ button,input,select{font:inherit;}
   color:var(--muted);
   font-size:13px;
 }
+.header-category:hover,
+.header-language:hover{
+  border-color:var(--hover-pink);
+  background:#fff4f7;
+  transform:translateY(-1px);
+}
 .header-category-menu{
   position:relative;
 }
@@ -142,6 +149,14 @@ button,input,select{font:inherit;}
   display:flex;
   align-items:center;
   gap:6px;
+}
+.header-nav a,
+.header-category,
+.header-language,
+.city-pill,
+.footer-links a,
+.category-dropdown a{
+  transition:border-color .18s ease, background-color .18s ease, transform .18s ease, color .18s ease;
 }
 .header-category-menu::after{
   content:"▾";
@@ -172,10 +187,13 @@ button,input,select{font:inherit;}
   color:#2f3e4c;
   padding:8px 10px;
   border-radius:10px;
+  border:1px solid transparent;
 }
 .category-dropdown a:hover{
-  background:#f4f7fb;
+  background:#fff4f7;
+  border-color:var(--hover-pink);
   color:var(--brand);
+  transform:translateY(-1px);
 }
 .header-city select,
 .header-category select,
@@ -215,10 +233,17 @@ button,input,select{font:inherit;}
   font-size:14px;
   font-weight:600;
   color:#34414d;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
 }
 .header-nav a.active,
 .header-nav a:hover{
   color:var(--brand);
+  border-color:var(--hover-pink);
+  background:#fff4f7;
+  transform:translateY(-1px);
 }
 
 /* Main */
@@ -266,9 +291,9 @@ button,input,select{font:inherit;}
   line-height:1.08;
   letter-spacing:-.03em;
   font-weight:800;
-  max-width:11.5em;
+  max-width:none;
 }
-.hero-title .brand-word{color:var(--brand);}
+.hero-title .brand-word{color:var(--brand);white-space:nowrap;}
 .hero-desc{
   max-width:58ch;
   color:#485664;
@@ -368,7 +393,9 @@ button,input,select{font:inherit;}
   font-weight:700;
 }
 .city-pill:hover{
-  border-color:#bfc9d5;
+  border-color:var(--hover-pink);
+  background:#fff4f7;
+  transform:translateY(-1px);
 }
 .city-pill.is-active{
   background:var(--brand);
@@ -693,6 +720,11 @@ button,input,select{font:inherit;}
   border:1px solid #e2e8f0;
 }
 .footer-links a:hover{color:var(--brand);}
+.footer-links a:hover{
+  border-color:var(--hover-pink);
+  background:#fff4f7;
+  transform:translateY(-1px);
+}
 
 /* Responsive */
 @media (max-width:1100px){
@@ -789,7 +821,7 @@ gtag('config', 'G-0300YC5NF8');
           <a href="./lifestyle/">住まい・生活</a>
           <a href="./cities/duesseldorf/jobs/" data-base="jobs">仕事・求人</a>
           <a href="./cities/duesseldorf/healthcare/" data-base="healthcare">医療・緊急</a>
-          <a href="./cities/duesseldorf/eat/" data-base="eat">食べる</a>
+          <a href="./cities/duesseldorf/eat/" data-base="eat">グルメ・飲食</a>
           <a href="./cities/duesseldorf/shopping/" data-base="shopping">買い物・サービス</a>
           <a href="./cities/duesseldorf/community/" data-base="community">交流・掲示板</a>
           <a href="./cities/duesseldorf/events/" data-base="events">おでかけ・イベント</a>
@@ -844,7 +876,7 @@ gtag('config', 'G-0300YC5NF8');
             <h2>表示都市を切り替える</h2>
             <div class="current-city" id="currentCityBadge">現在の都市：デュッセルドルフ</div>
             <p>
-              仕事・求人、医療・緊急、食べる、買い物・サービス、交流・掲示板、おでかけ・イベントは、
+              仕事・求人、医療・緊急、グルメ・飲食、買い物・サービス、交流・掲示板、おでかけ・イベントは、
               選択した都市に合わせてリンク先が切り替わります。
             </p>
 
@@ -898,7 +930,7 @@ gtag('config', 'G-0300YC5NF8');
             </div>
             <div class="cat-content">
               <div class="cat-kicker">Eat</div>
-              <div class="cat-title">食べる</div>
+              <div class="cat-title">グルメ・飲食</div>
               <div class="cat-desc">日本食、ラーメン、カフェ、ランチ、居酒屋など外食スポットを探す。</div>
             </div>
           </div>
