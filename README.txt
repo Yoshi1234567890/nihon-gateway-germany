@@ -1,1 +1,0 @@
-Flat JA template ZIP.
