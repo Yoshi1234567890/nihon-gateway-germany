@@ -35,7 +35,7 @@
   --cat-medical:#06b6d4;
   --cat-eat:#f97316;
   --cat-shopping:#8b5cf6;
-  --cat-board:#ec4899;
+  --cat-community:#ec4899;
   --cat-events:#14b8a6;
   --cat-german:#eab308;
   --cat-news:#64748b;
@@ -666,7 +666,7 @@ button,input,select{font:inherit;}
 .cat-shopping{
   --cat-heading:#4c1d95;
 }
-.cat-board{
+.cat-community{
   --cat-heading:#831843;
 }
 .cat-events{
@@ -715,8 +715,8 @@ button,input,select{font:inherit;}
   --cat-dark-rgb:76, 29, 149;
   background-image:url('../assets/images/cards/shopping.jpg');
 }
-.cat-board{
-  --cat-color:var(--cat-board);
+.cat-community{
+  --cat-color:var(--cat-community);
   --cat-rgb:236, 72, 153;
   --cat-dark-rgb:131, 24, 67;
   background-image:url('../assets/images/cards/community.jpg');
@@ -1050,7 +1050,7 @@ gtag('config', 'G-0300YC5NF8');
           </div>
         </a>
 
-        <a class="cat-card featured cat-board city-dependent" href="./community/" data-base="community">
+        <a class="cat-card featured cat-community city-dependent" href="./community/" data-base="community">
           <div class="cat-card-body">
             <div class="cat-top">
               <div class="cat-icon">🤝</div>
@@ -1059,7 +1059,7 @@ gtag('config', 'G-0300YC5NF8');
               </div>
             </div>
             <div class="cat-content">
-              <div class="cat-kicker">Board</div>
+              <div class="cat-kicker">community</div>
               <div class="cat-title">交流・掲示板</div>
               <div class="cat-desc">売ります・買います、相談、募集、地域交流などコミュニティ情報を探す。</div>
             </div>
@@ -1144,7 +1144,7 @@ gtag('config', 'G-0300YC5NF8');
         </a>
 
 
-        <a class="cat-card cat-medical city-dependent" href="./healthcare/" data-base="healthcare">
+        <a class="cat-card cat-medical city-dependent" href="./medical/" data-base="medical">
           <div class="cat-card-body">
             <div class="cat-top">
               <div class="cat-icon">🏥</div>
@@ -1223,7 +1223,7 @@ const cityConfig = {
     name: 'デュッセルドルフ',
     paths: {
       jobs: './jobs/',
-      healthcare: './healthcare/',
+      medical: './medical/',
       eat: './eat/',
       shopping: './shopping/',
       community: './community/',
@@ -1234,7 +1234,7 @@ const cityConfig = {
     name: 'フランクフルト',
     paths: {
       jobs: './cities/frankfurt/jobs/',
-      healthcare: './cities/frankfurt/healthcare/',
+      medical: './cities/frankfurt/medical/',
       eat: './cities/frankfurt/eat/',
       shopping: './cities/frankfurt/shopping/',
       community: './cities/frankfurt/community/',
@@ -1245,7 +1245,7 @@ const cityConfig = {
     name: 'ミュンヘン',
     paths: {
       jobs: './cities/muenchen/jobs/',
-      healthcare: './cities/muenchen/healthcare/',
+      medical: './cities/muenchen/medical/',
       eat: './cities/muenchen/eat/',
       shopping: './cities/muenchen/shopping/',
       community: './cities/muenchen/community/',
@@ -1256,7 +1256,7 @@ const cityConfig = {
     name: 'ベルリン',
     paths: {
       jobs: './cities/berlin/jobs/',
-      healthcare: './cities/berlin/healthcare/',
+      medical: './cities/berlin/medical/',
       eat: './cities/berlin/eat/',
       shopping: './cities/berlin/shopping/',
       community: './cities/berlin/community/',
