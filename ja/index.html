@@ -150,6 +150,15 @@ button,input,select{font:inherit;}
   display:flex;
   align-items:center;
 }
+.header-category-menu::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:100%;
+  width:100%;
+  height:12px;
+}
+
 .header-category-trigger{
   border:none;
   background:transparent;
@@ -170,7 +179,7 @@ button,input,select{font:inherit;}
 }
 .category-dropdown{
   position:absolute;
-  top:calc(100% + 10px);
+  top:calc(100% + 8px);
   left:0;
   min-width:220px;
   background:#fff;
@@ -217,6 +226,9 @@ button,input,select{font:inherit;}
 .header-search .search-box span{font-size:19px;}
 .header-search .search-box input{font-size:13px;}
 .header-search .search-btn{
+    display:flex;
+  align-items:center;
+  justify-content:center;
   height:42px;
   border-radius:999px;
   padding:0 14px;
@@ -422,11 +434,11 @@ button,input,select{font:inherit;}
   display:flex;
   align-items:flex-start;
   gap:10px;
-  color:#33404c;
+  color:#556270;
   font-size:14px;
-  border:1px solid rgba(216,222,230,.95);
+  border:1px solid rgba(156, 156, 156, 0.5);
   border-radius:14px;
-  background:rgba(238,241,244,.92);
+  background:rgba(255,255,255,.5);
   backdrop-filter:blur(4px);
   padding:12px;
 }
@@ -521,19 +533,20 @@ button,input,select{font:inherit;}
 .cat-card-body{
   position:relative;
   z-index:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
   height:100%;
   padding:18px;
 }
+
 .cat-top{
-  width:100%;
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:10px;
+  z-index:2;
 }
 .cat-icon{
   width:48px;
@@ -571,12 +584,17 @@ button,input,select{font:inherit;}
 .cat-card:not(.city-dependent) .cat-badges{display:none;}
 
 .cat-content{
-  margin:auto 0;
-  width:100%;
+  position:absolute;
+  top:50%;
+  left:18px;
+  right:18px;
+  transform:translateY(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
-  padding-bottom:6px;
+  justify-content:center;
+  text-align:center;
+  z-index:1;
 }
 
 .cat-kicker{
@@ -584,9 +602,8 @@ button,input,select{font:inherit;}
   font-weight:800;
   letter-spacing:.08em;
   text-transform:uppercase;
-  color:#111;
-  -webkit-text-stroke:.7px rgba(0,0,0,.45);
-  text-shadow:0 1px 3px rgba(255,255,255,.34);
+  color:var(--cat-heading, rgba(var(--cat-dark-rgb), .98));
+  text-shadow:0 1px 1px rgba(255,255,255,.36), 0 0 0.5px rgba(255,255,255,.45);
   margin-bottom:8px;
   text-align:center;
 }
@@ -597,27 +614,22 @@ button,input,select{font:inherit;}
   font-family:'Noto Sans JP','Inter',sans-serif;
   letter-spacing:.01em;
   margin-bottom:10px;
-  color:#111;
-  text-shadow:0 2px 5px rgba(255,255,255,.35);
-  -webkit-text-stroke:.2px rgba(255,255,255,.45);
+  color:var(--cat-heading, rgba(var(--cat-dark-rgb), .98));
+  text-shadow:0 2px 3px rgba(255,255,255,.46), 0 0 1px rgba(255,255,255,.52);
   text-align:center;
 }
 .cat-desc{
   color:rgba(var(--cat-dark-rgb), .95);
   font-size:14px;
   line-height:1.7;
-  max-width:34ch;
-  text-shadow:none;
   text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width:100%;
 }
 .cat-foot{
-  margin-top:auto;
-  padding-top:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  width:100%;
+  display:none;
 }
 .cat-link{
   font-size:14px;
@@ -636,6 +648,37 @@ button,input,select{font:inherit;}
 }
 
 /* card bg paths */
+.cat-guides{
+  --cat-heading:#7a4507;
+}
+.cat-living{
+  --cat-heading:#065f46;
+}
+.cat-jobs{
+  --cat-heading:#1e40af;
+}
+.cat-medical{
+  --cat-heading:#0c4a6e;
+}
+.cat-eat{
+  --cat-heading:#7c2d12;
+}
+.cat-shopping{
+  --cat-heading:#4c1d95;
+}
+.cat-board{
+  --cat-heading:#831843;
+}
+.cat-events{
+  --cat-heading:#115e59;
+}
+.cat-german{
+  --cat-heading:#713f12;
+}
+.cat-news{
+  --cat-heading:#1e293b;
+}
+
 .cat-guides{
   --cat-color:var(--cat-guides);
   --cat-rgb:245, 158, 11;
@@ -986,7 +1029,6 @@ gtag('config', 'G-0300YC5NF8');
         <div class="section-title-wrap">
           <div class="section-kicker">Categories</div>
           <h2 class="section-title">目的から探す</h2>
-          <p class="section-desc">まず必要な情報に最短で入れるよう、よく使う導線を上に配置しています。</p>
         </div>
         <div class="section-meta">全10カテゴリ</div>
       </div>
@@ -1066,7 +1108,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">Shopping</div>
               <div class="cat-title">買い物・サービス</div>
-              <div class="cat-desc">スーパー、アジアショップ、薬局、日用品店、生活サービスを探す。</div>
+              <div class="cat-desc">スーパー、アジアショップ、薬局、<br>  生活サービスを探す。</div>
             </div>
           </div>
         </a>
@@ -1081,7 +1123,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">Guides</div>
               <div class="cat-title">手続き・制度</div>
-              <div class="cat-desc">Anmeldung、ビザ、保険、税金、契約など、生活立ち上げや継続に必要な制度と手続きを確認。</div>
+              <div class="cat-desc">Anmeldung、ビザ、保険、税金、契約など、<br>生活立ち上げや継続に必要な制度と手続きを確認。</div>
             </div>
           </div>
         </a>
@@ -1096,7 +1138,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">Living</div>
               <div class="cat-title">住まい・生活</div>
-              <div class="cat-desc">住まい探し、交通、生活の立ち上げ、日用品、暮らしの基礎情報をまとめて確認。</div>
+              <div class="cat-desc">住まい探し、交通、生活の立ち上げ、日用品、<br>暮らしの基礎情報をまとめて確認。</div>
             </div>
           </div>
         </a>
@@ -1113,7 +1155,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">Medical</div>
               <div class="cat-title">医療・緊急</div>
-              <div class="cat-desc">病院、歯科、薬局、緊急時の対応先や受診時に必要な情報を確認。</div>
+              <div class="cat-desc">病院、歯科、薬局、緊急時の<br>対応先や受診時に必要な情報を確認。</div>
             </div>
           </div>
         </a>
@@ -1129,7 +1171,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">Events</div>
               <div class="cat-title">おでかけ・イベント</div>
-              <div class="cat-desc">イベント、観光、週末のおでかけ先、季節イベントや地域情報を探す。</div>
+              <div class="cat-desc">イベント、観光、週末のおでかけ先、<br>季節イベントや地域情報を探す。</div>
             </div>
           </div>
         </a>
@@ -1144,7 +1186,7 @@ gtag('config', 'G-0300YC5NF8');
             <div class="cat-content">
               <div class="cat-kicker">News</div>
               <div class="cat-title">ニュース・読みもの</div>
-              <div class="cat-desc">制度変更、生活関連トピック、現地ニュース、日本関連情報や読みものを確認。</div>
+              <div class="cat-desc">制度変更、生活関連トピック、現地ニュース、<br>日本関連情報や読みものを確認。</div>
             </div>
           </div>
         </a>
