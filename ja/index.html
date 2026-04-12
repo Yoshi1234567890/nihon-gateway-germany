@@ -1,12 +1,85 @@
----
-layout: ja-default
-title: 日本語トップ | Nihon Gateway Germany
-description: ドイツ在住日本人向け生活情報ポータル。手続き、住まい、仕事、医療、食、買い物、掲示板、イベント、ドイツ語学習、ニュースまで幅広く掲載。
-permalink: /ja/
-nav: home
-page_css: ja-home.css
-canonical: https://yoshi1234567890.github.io/nihon-gateway-germany/ja/
----
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本語トップ | Nihon Gateway Germany</title>
+  <meta name="description" content="ドイツ在住日本人向け生活情報ポータル。手続き、住まい、仕事、医療、食、買い物、掲示板、イベント、ドイツ語学習、ニュースまで幅広く掲載。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/">
+  <link rel="icon" type="image/png" href="/nihon-gateway-germany/assets/images/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/nihon-gateway-germany/assets/css/common.css">
+  <link rel="stylesheet" href="/nihon-gateway-germany/assets/css/ja-home.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0300YC5NF8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-0300YC5NF8');
+  </script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/nihon-gateway-germany/ja/" aria-label="Nihon Gateway Germany ホーム">
+      <img class="brand-logo" src="/nihon-gateway-germany/assets/images/brand/logo_header.png" alt="Nihon Gateway Germany ヘッダーロゴ">
+      <span class="brand-copy">
+        <span class="brand-title">NIHON GATEWAY GERMANY</span>
+        <span class="brand-sub">ドイツ在住日本人のための生活ポータル</span>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <nav class="header-nav" aria-label="メインナビゲーション">
+        <a href="/nihon-gateway-germany/ja/" class="active">ホーム</a>
+        <a href="/nihon-gateway-germany/ja/about/">このサイトについて</a>
+      </nav>
+
+      <div class="header-category header-category-menu" aria-label="カテゴリ選択">
+        <button type="button" class="header-category-trigger">カテゴリ</button>
+        <div class="category-dropdown">
+          <a href="/nihon-gateway-germany/ja/guides/">手続き・制度</a>
+          <a href="/nihon-gateway-germany/ja/lifestyle/">住まい・生活</a>
+          <a href="/nihon-gateway-germany/ja/jobs/">仕事・求人</a>
+          <a href="/nihon-gateway-germany/ja/healthcare/">医療・緊急</a>
+          <a href="/nihon-gateway-germany/ja/eat/">食べる</a>
+          <a href="/nihon-gateway-germany/ja/shopping/">買い物・サービス</a>
+          <a href="/nihon-gateway-germany/ja/community/">交流・掲示板</a>
+          <a href="/nihon-gateway-germany/ja/events/">おでかけ・イベント</a>
+          <a href="/nihon-gateway-germany/ja/learn-german/">ドイツ語・学び</a>
+          <a href="/nihon-gateway-germany/ja/news/">ニュース・読みもの</a>
+        </div>
+      </div>
+
+      <form class="header-search" action="/nihon-gateway-germany/ja/search/" method="get" role="search">
+        <label class="search-box" aria-label="サイト内検索">
+          <span>⌕</span>
+          <input type="search" name="q" placeholder="検索">
+        </label>
+        <button class="search-btn" type="submit" aria-label="検索">⌕</button>
+      </form>
+
+      <label class="header-language" aria-label="言語切り替え">
+        <span>Language</span>
+        <select id="languageSelect">
+          <option value="/nihon-gateway-germany/ja/">日本語</option>
+          <option value="/nihon-gateway-germany/">English</option>
+          <option value="/nihon-gateway-germany/de/">Deutsch</option>
+          <option value="/nihon-gateway-germany/zh/">中文</option>
+          <option value="/nihon-gateway-germany/ko/">한국어</option>
+          <option value="/nihon-gateway-germany/es/">Espanol</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</header>
 
 <main class="main">
   <div class="container">
@@ -16,7 +89,7 @@ canonical: https://yoshi1234567890.github.io/nihon-gateway-germany/ja/
         <div class="hero-main">
           <h1 class="hero-title">
             ドイツの生活を<br>
-            <span class="brand-word">もっとaaaa楽しく &nbsp;もっと簡単に</span>
+            <span class="brand-word">もっと楽しく &nbsp;もっと簡単に</span>
           </h1>
 
           <p class="hero-desc">
@@ -207,5 +280,30 @@ canonical: https://yoshi1234567890.github.io/nihon-gateway-germany/ja/
       </div>
     </section>
 
+    <footer class="page-footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <img class="footer-logo" src="/nihon-gateway-germany/assets/images/brand/logo_footer.png" alt="Nihon Gateway Germany フッターロゴ">
+          <div class="footer-copy">
+            <div class="footer-title">NIHON GATEWAY GERMANY</div>
+            <div class="footer-sub">ドイツ在住日本人のための生活ポータル</div>
+            <div class="footer-meta">© 2026 Nihon Gateway Germany · 日本とドイツをつなぐ</div>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="/nihon-gateway-germany/ja/about/">このサイトについて</a>
+          <a href="/nihon-gateway-germany/ja/contact/">お問い合わせ</a>
+          <a href="/nihon-gateway-germany/ja/terms/">利用規約</a>
+          <a href="/nihon-gateway-germany/ja/privacy/">プライバシー</a>
+          <a href="/nihon-gateway-germany/ja/impressum/">運営者情報</a>
+        </div>
+      </div>
+    </footer>
+
   </div>
 </main>
+
+<script src="/nihon-gateway-germany/assets/js/common.js"></script>
+</body>
+</html>
