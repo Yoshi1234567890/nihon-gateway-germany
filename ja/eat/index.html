@@ -87,6 +87,7 @@
     .brand-logo{
       width:120px;
       height:70px;
+      border-radius:14px;
       object-fit:contain;
       background:transparent;
       border:none;
@@ -113,6 +114,7 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
+    .header-city,
     .header-category,
     .header-language{
       display:flex;
@@ -241,6 +243,8 @@
       border:1px solid rgba(47,128,237,.32);
       cursor:pointer;
     }
+    .header-city select,
+    .header-category select,
     .header-language select{
       border:none;
       background:transparent;
@@ -730,8 +734,27 @@
       }
     }
 
-    @media (max-width: 760px){
-      .header-inner{align-items:flex-start;flex-direction:column}
+    @media (max-width: 780px){
+      .header-inner{
+        min-height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .header-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+      .header-search{
+        width:100%;
+      }
+      .header-search .search-box{
+        flex:1 1 auto;
+      }
+      .header-actions .header-category,
+      .header-actions .header-language{
+        width:max-content;
+      }
       .header-nav{width:100%;justify-content:flex-start}
       .hero-box{padding:26px 20px 22px}
       .cards{grid-template-columns:1fr}
@@ -1074,25 +1097,14 @@ function buildAddress(item) {
       return getField(item, "category2");
     }
 
-    function normalizeCityKey(value) {
-      const raw = normalize(value)
-        .replace(/ü/g, "u")
-        .replace(/ä/g, "a")
-        .replace(/ö/g, "o")
-        .replace(/[.\-_]/g, "")
-        .replace(/\s+/g, "");
-
-      if (!raw) return "";
-
-      if (raw.includes("duesseldorf") || raw.includes("dusseldorf") || raw.includes("デュッセルドルフ")) return "duesseldorf";
-      if (raw.includes("frankfurt") || raw.includes("フランクフルト")) return "frankfurt";
-      if (raw.includes("muenchen") || raw.includes("munchen") || raw.includes("munich") || raw.includes("ミュンヘン")) return "muenchen";
-      if (raw.includes("berlin") || raw.includes("ベルリン")) return "berlin";
-      return "";
-    }
-
-    function getItemCityKey(item) {
-      return normalizeCityKey(getField(item, "city"));
+    function normalizeCity(value) {
+      const v = normalize(value);
+      if (!v) return "";
+      if (["duesseldorf", "dusseldorf", "düsseldorf", "デュッセルドルフ"].includes(v)) return "duesseldorf";
+      if (["frankfurt", "フランクフルト"].includes(v)) return "frankfurt";
+      if (["muenchen", "münchen", "munchen", "ミュンヘン"].includes(v)) return "muenchen";
+      if (["berlin", "ベルリン"].includes(v)) return "berlin";
+      return v;
     }
 
     function buildSearchText(item) {
@@ -1193,7 +1205,7 @@ function buildAddress(item) {
 
       filteredItems = rawItems.filter(item => {
         const matchesKeyword = !keyword || buildSearchText(item).includes(keyword);
-        const matchesCity = !city || getItemCityKey(item) === city;
+        const matchesCity = !city || normalizeCity(getField(item, "city")) === city;
         const matchesCategory1 = !category1 || getCategory1(item) === category1;
         const matchesCategory2 = !category2 || getCategory2(item) === category2;
         const reviews = parseNumber(getField(item, "reviewsCount")) || 0;
@@ -1338,29 +1350,6 @@ function buildAddress(item) {
       }
 
       return null;
-    }
-
-    function applyInitialCityFilter() {
-      let initialCity = "";
-
-      const pathMatch = window.location.pathname.match(/\/cities\/(duesseldorf|frankfurt|muenchen|berlin)\//i);
-      if (pathMatch && pathMatch[1]) {
-        initialCity = normalizeCityKey(pathMatch[1]);
-      }
-
-      try {
-        const saved = localStorage.getItem("ngg_selected_city");
-        const savedCity = normalizeCityKey(saved);
-        if (savedCity) initialCity = savedCity;
-      } catch (e) {}
-
-      const queryCity = new URLSearchParams(window.location.search).get("city");
-      const queryCityKey = normalizeCityKey(queryCity);
-      if (queryCityKey) initialCity = queryCityKey;
-
-      if (initialCity && els.citySelect) {
-        els.citySelect.value = initialCity;
-      }
     }
 
     async function geocodeAddress(address) {
@@ -1597,6 +1586,15 @@ rawItems.forEach(preloadCoordinatesFromFields);
       }
     }
 
+    try {
+      const savedCity = localStorage.getItem("ngg_selected_city");
+      if (savedCity && Array.from(els.citySelect.options).some(option => option.value === savedCity)) {
+        els.citySelect.value = savedCity;
+      }
+    } catch (error) {
+      console.warn("Failed to load selected city from localStorage.", error);
+    }
+
     els.keywordInput.addEventListener("input", filterItems);
     els.citySelect.addEventListener("change", filterItems);
     els.category1Select.addEventListener("change", () => { updateCategory2Options(); filterItems(); });
@@ -1608,7 +1606,6 @@ rawItems.forEach(preloadCoordinatesFromFields);
     els.cardViewBtn.addEventListener("click", () => setViewMode("card"));
     els.mapViewBtn.addEventListener("click", () => setViewMode("map"));
 
-    applyInitialCityFilter();
     loadData();
   </script>
 
