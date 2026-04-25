@@ -549,11 +549,58 @@
       line-height:1.12;
       word-break:break-word;
     }
+    .card-heading{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .card-heading .card-title{
+      flex:1;
+      min-width:0;
+    }
     .card-subtitle{
       margin-top:4px;
       color:var(--muted);
       font-size:14px;
       word-break:break-word;
+    }
+    .card-rating{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:14px;
+      color:#5f6368;
+      white-space:nowrap;
+      margin-top:2px;
+    }
+    .card-rating-score{
+      font-weight:700;
+      color:#3c4043;
+    }
+    .card-rating-stars{
+      position:relative;
+      display:inline-block;
+      font-size:16px;
+      line-height:1;
+      letter-spacing:1px;
+      color:#dadce0;
+    }
+    .card-rating-stars::before{
+      content:"★★★★★";
+    }
+    .card-rating-stars-fill{
+      position:absolute;
+      inset:0 auto 0 0;
+      overflow:hidden;
+      color:#fbbc04;
+      white-space:nowrap;
+    }
+    .card-rating-stars-fill::before{
+      content:"★★★★★";
+    }
+    .card-rating-reviews{
+      color:#5f6368;
     }
     .meta-list{display:grid;gap:10px}
     .meta-item{
@@ -1061,6 +1108,25 @@
       return Number.isFinite(n) ? n.toLocaleString("ja-JP") + "件" : "";
     }
 
+    function buildCardRatingHtml(item) {
+      const scoreValue = parseFloat(getField(item, "totalScore"));
+      const reviewCount = parseNumber(getField(item, "reviewsCount"));
+      if (!Number.isFinite(scoreValue) && !Number.isFinite(reviewCount)) return "";
+
+      const safeScore = Number.isFinite(scoreValue) ? Math.max(0, Math.min(5, scoreValue)) : 0;
+      const scoreLabel = Number.isFinite(scoreValue) ? safeScore.toFixed(1) : "-";
+      const fillWidth = (safeScore / 5) * 100;
+      const reviewsLabel = Number.isFinite(reviewCount) ? `(${reviewCount.toLocaleString("ja-JP")})` : "";
+
+      return `
+        <div class="card-rating" aria-label="評価 ${escapeHtml(scoreLabel)}、レビュー${Number.isFinite(reviewCount) ? reviewCount.toLocaleString("ja-JP") : "なし"}">
+          <span class="card-rating-score">${escapeHtml(scoreLabel)}</span>
+          <span class="card-rating-stars" aria-hidden="true"><span class="card-rating-stars-fill" style="width:${fillWidth.toFixed(1)}%"></span></span>
+          ${reviewsLabel ? `<span class="card-rating-reviews">${escapeHtml(reviewsLabel)}</span>` : ""}
+        </div>
+      `;
+    }
+
     function preloadCoordinatesFromFields(item) {
   const lat = parseFloat(getField(item, "location/lat", "lat", "latitude"));
   const lng = parseFloat(getField(item, "location/lng", "lng", "lon", "longitude", "long"));
@@ -1287,12 +1353,14 @@ function buildAddress(item) {
         const mapUrl = getField(item, "url", "map_url");
         const price = getField(item, "price_range", "price");
         const description = getField(item, "description_ja", "description");
+        const ratingHtml = buildCardRatingHtml(item);
 
         return `
           <article class="card ${activeItemId === item.__id ? "active-map-item" : ""}" data-item-id="${escapeHtml(item.__id)}">
             <div class="card-body">
-              <div>
+              <div class="card-heading">
                 <h3 class="card-title">${titleHtml}</h3>
+                ${ratingHtml}
               </div>
 
               <div class="meta-list">
