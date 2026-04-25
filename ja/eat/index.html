@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eat | グルメ・飲食 | Nihon Gateway Germany</title>
-  <meta name="description" content="レストラン・ラーメン・カフェの情報を日本語で見やすく整理。カテゴリ、評価、価格帯、地図リンクをまとめて確認できます。" />
+  <meta name="description" content="ドイツ生活の「食べる」を、もっと便利に。" />
   <meta name="theme-color" content="#f7f3ee" />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/cities/duesseldorf/eat/" />
   <link rel="icon" type="image/jpeg" href="../../assets/images/brand/favicon.png" />
 
   <meta property="og:title" content="Eat | グルメ・飲食 | Nihon Gateway Germany" />
-  <meta property="og:description" content="レストラン・ラーメン・カフェ情報を日本語で見やすく一覧化。" />
+  <meta property="og:description" content="普段使いのカフェから特別な日のレストランまで。比較しやすい飲食店ガイドです。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/cities/duesseldorf/eat/" />
   <meta property="og:locale" content="ja_JP" />
@@ -606,11 +606,14 @@
       box-shadow:var(--card-shadow);
       height:var(--map-height);
     }
-    #map{
-      width:100%;
-      height:100%;
-      min-height:500px;
-    }
+#map{
+  width:100%;
+  height:100%;
+  min-height:500px;
+}
+#map .leaflet-tile{
+  filter:contrast(1.08) saturate(1.12) brightness(.96);
+}
 
     .leaflet-popup-content-wrapper{
       border-radius:18px;
@@ -1367,11 +1370,10 @@ function initMapIfNeeded() {
     scrollWheelZoom: true
   }).setView([51.2277, 6.7735], 13); // 地図中心
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    subdomains: "abcd",
-    maxZoom: 20,
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-  }).addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 20,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
   markerLayer = L.layerGroup().addTo(map);
   mapInitialized = true;
