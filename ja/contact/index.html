@@ -4,259 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Nihon Gateway Germany</title>
-  <meta name="description" content="Nihon Gateway Germanyへのお問い合わせ。掲載修正依頼、掲載希望、提携、広告、求人掲載、不具合報告などを受け付けています。" />
-  <meta name="theme-color" content="#f7f3ee" />
+  <meta name="description" content="Nihon Gateway Germanyへのお問い合わせ。掲載修正依頼、掲載希望、提携、広告、求人掲載、不具合報告を受け付けています。" />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/contact/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Contact | Nihon Gateway Germany" />
-  <meta property="og:description" content="Nihon Gateway Germanyへのお問い合わせはこちら。内容に応じて使いやすいフォームをご用意しています。" />
-  <meta property="og:url" content="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/contact/" />
-  <meta property="og:site_name" content="Nihon Gateway Germany" />
-  <link rel="alternate" hreflang="ja" href="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/contact/" />
+  <link rel="icon" type="image/jpeg" href="../../assets/images/brand/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --red:#e8002d;--orange:#ff6b2b;--yellow:#ffc93c;--teal:#00b4a6;--blue:#2f6df5;
-      --purple:#7c3aed;--pink:#f472b6;--cream:#fdf8f2;--paper:#fffdf9;--ink:#1a1014;
-      --muted:#6b5e68;--border:#ede5e0;--card:#ffffff;--shadow:0 10px 30px rgba(26,16,20,.08);
-      --radius-xl:28px;--radius-lg:22px;--radius-md:16px;--max:1180px
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,"Noto Sans JP","Hiragino Sans",sans-serif;
-      background:linear-gradient(180deg,#fffaf4 0%,#f8f2ec 100%);
-      color:var(--ink);
-      line-height:1.8
-    }
-    a{color:inherit;text-decoration:none}
-    .top-ribbon{
-      background:linear-gradient(90deg,#1a0d14 0%,#2a1420 50%,#1a0d14 100%);
-      color:#fff;overflow:auto;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.08)
-    }
-    .top-ribbon::-webkit-scrollbar{display:none}
-    .ribbon-inner{
-      max-width:var(--max);margin:0 auto;display:flex;gap:14px;padding:10px 18px;white-space:nowrap;font-size:13px
-    }
-    .ribbon-pill{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
-      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)
-    }
-    .site-header{
-      position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
-      background:rgba(253,248,242,.82);border-bottom:1px solid rgba(237,229,224,.9)
-    }
-    .nav{
-      max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;
-      padding:16px 18px;gap:16px
-    }
-    .logo{font-size:15px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
-    .logo span{color:var(--red)}
-    .nav-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .nav-links a{padding:10px 14px;border-radius:999px;font-size:14px;color:var(--muted)}
-    .nav-links a.active,.nav-links a:hover{background:#fff;border:1px solid var(--border);color:var(--ink)}
-    .wrap{max-width:var(--max);margin:0 auto;padding:26px 18px 60px}
-    .hero,.content{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
-    .hero-main,.hero-side,.panel{
-      background:linear-gradient(180deg,#fffdfb 0%,#fff7f1 100%);
-      border:1px solid var(--border);border-radius:var(--radius-xl);box-shadow:var(--shadow)
-    }
-    .hero-main,.hero-side,.panel{padding:28px}
-    .eyebrow{
-      display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;background:#fff;
-      border:1px solid var(--border);font-size:13px;color:var(--muted);margin-bottom:18px
-    }
-    h1{font-size:clamp(34px,5vw,56px);line-height:1.08;letter-spacing:-.03em;margin:0 0 16px}
-    .lead{font-size:18px;color:#433841}
-    .quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
-    .mini{background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px}
-    .form-wrap{margin-top:24px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .field{display:flex;flex-direction:column;gap:8px}
-    .field.full{grid-column:1/-1}
-    label{font-size:14px;font-weight:700}
-    .input,select,textarea{
-      width:100%;padding:14px 15px;border-radius:16px;border:1px solid var(--border);
-      background:#fff;font:inherit;color:var(--ink)
-    }
-    textarea{min-height:180px;resize:vertical}
-    .submit{
-      margin-top:16px;display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;
-      border:none;border-radius:999px;background:linear-gradient(90deg,var(--red),var(--orange));
-      color:#fff;font-weight:800;font:inherit;cursor:pointer
-    }
-    .submit[disabled]{opacity:.7;cursor:not-allowed}
-    .panel h2{margin:0 0 12px;font-size:28px}
-    .panel h3{margin:20px 0 8px;font-size:20px}
-    .panel p,.panel li{color:#40353d}
-    .list{padding-left:20px;margin:0}
-    .note{font-size:13px;color:var(--muted)}
-    .status-box{
-      display:none;
-      margin-top:16px;
-      padding:14px 16px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background:#fff;
-      font-size:14px
-    }
-    .status-box.show{display:block}
-    .status-success{border-color:#cfe9d8;background:#f4fbf6;color:#1d5c33}
-    .status-error{border-color:#f3d0d6;background:#fff6f7;color:#9d2235}
-    .footer{max-width:var(--max);margin:0 auto 32px;padding:0 18px}
-    .footer-inner{background:#1d1217;color:#fff;border-radius:28px;padding:26px;border:1px solid rgba(255,255,255,.06)}
-    .footer-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .footer-links a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);font-size:14px}
-    @media (max-width:960px){
-      .hero,.content,.form-grid,.quick-grid{grid-template-columns:1fr}
-      .nav{align-items:flex-start;flex-direction:column}
-      .nav-links{justify-content:flex-start}
-    }
+    :root{--bg:#f7f8fa;--line:#e6eaf0;--text:#16202a;--muted:#5f6b76;--brand:#d84b6a;--max:1220px;--card:#fff;--shadow:0 12px 32px rgba(19,35,58,.10)}
+    *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Inter','Noto Sans JP',sans-serif;color:var(--text);line-height:1.7;background:linear-gradient(rgba(247,248,250,.78), rgba(247,248,250,.82)),url('../../assets/images/brand/site-bg.jpg') center top/cover fixed no-repeat,var(--bg)}
+    a{text-decoration:none;color:inherit} button,input,select,textarea{font:inherit}
+    .container{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+    .site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.84);backdrop-filter:blur(12px);border-bottom:1px solid rgba(230,234,240,.92)}
+    .header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}.brand-logo{width:120px;height:70px;object-fit:contain}.brand-title{font-size:14px;font-weight:800;letter-spacing:.08em;display:block}.brand-sub{font-size:12px;color:var(--muted);display:block;margin-top:4px}
+    .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.pill{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px}
+    .hero{margin:28px 0 18px;padding:40px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,#fff 0%,#fff8fb 100%);box-shadow:var(--shadow)}
+    .eyebrow{display:inline-flex;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;color:var(--muted);margin-bottom:16px}
+    h1{font-size:clamp(34px,5vw,56px);line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}.lead{font-size:18px;color:#36424f;max-width:860px}
+    .content{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-bottom:30px}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+    .list{padding-left:18px;display:grid;gap:8px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:8px}.field.full{grid-column:1/-1}
+    label{font-size:14px;font-weight:700}.input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff}textarea{min-height:150px;resize:vertical}
+    .submit{margin-top:14px;display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border:none;border-radius:999px;background:#2f80ed;color:#fff;font-weight:700;cursor:pointer}
+    .status-box{display:none;margin-top:14px;padding:12px;border-radius:12px;border:1px solid var(--line);font-size:14px}.status-box.show{display:block}.status-success{border-color:#cfe9d8;background:#f4fbf6;color:#1d5c33}.status-error{border-color:#f3d0d6;background:#fff6f7;color:#9d2235}
+    .site-footer{background:#161c24;color:#fff;margin-top:30px;border-top:1px solid rgba(255,255,255,.1)}.footer-inner{padding:30px 0;display:grid;gap:14px}.footer-brand{display:flex;align-items:center;gap:12px}.footer-logo{width:120px;height:70px;object-fit:contain}.footer-links{display:flex;gap:10px;flex-wrap:wrap}.footer-links a{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.08);font-size:13px}
+    @media (max-width:960px){.content,.form-grid{grid-template-columns:1fr}.header-inner{align-items:flex-start;padding:10px 0}.hero{padding:28px 20px}}
   </style>
 </head>
 <body>
-  <div class="top-ribbon">
-    <div class="ribbon-inner">
-      <div class="ribbon-pill">掲載修正依頼</div>
-      <div class="ribbon-pill">掲載希望・提携相談</div>
-      <div class="ribbon-pill">広告・求人掲載・不具合報告</div>
-    </div>
-  </div>
+  <header class="site-header"><div class="container header-inner"><a class="brand" href="/nihon-gateway-germany/ja/"><img class="brand-logo" src="../../assets/images/brand/logo_header.png" alt="Nihon Gateway Germany" /><span><span class="brand-title">NIHON GATEWAY GERMANY</span><span class="brand-sub">ドイツ在住日本人向け生活ポータル</span></span></a><div class="header-actions"><div class="pill">🇩🇪 Düsseldorf</div><div class="pill">お問い合わせ</div><label class="pill">🌐<select onchange="if(this.value) location.href=this.value"><option value="/nihon-gateway-germany/ja/contact/" selected>日本語</option><option value="/nihon-gateway-germany/de/">Deutsch</option></select></label></div></div></header>
 
-  <header class="site-header">
-    <nav class="nav" aria-label="Primary">
-      <a class="logo" href="/nihon-gateway-germany/ja/"><span>Nihon</span> Gateway Germany</a>
-      <div class="nav-links">
-        <a href="/nihon-gateway-germany/ja/">Home</a>
-        <a href="/nihon-gateway-germany/ja/about/">About</a>
-        <a class="active" href="/nihon-gateway-germany/ja/contact/">Contact</a>
-        <a href="/nihon-gateway-germany/ja/terms/">Terms</a>
-        <a href="/nihon-gateway-germany/ja/privacy/">Privacy</a>
-        <a href="/nihon-gateway-germany/ja/impressum/">Impressum</a>
-      </div>
-    </nav>
-  </header>
-
-  <main class="wrap">
-    <section class="hero">
-      <div class="hero-main">
-        <div class="eyebrow">Contact Nihon Gateway Germany</div>
-        <h1>お問い合わせ・掲載相談</h1>
-        <p class="lead">
-          Nihon Gateway Germany では、一般のお問い合わせ、掲載修正依頼、新規掲載希望、提携・広告、求人掲載、不具合報告などを受け付けています。
-          下のフォームからご連絡ください。
-        </p>
-
-        <div class="quick-grid">
-          <div class="mini"><strong>返信目安</strong><br>通常 3日以内を目安に確認します。</div>
-          <div class="mini"><strong>送信方法</strong><br>専用フォーム経由で受け付けます。</div>
-          <div class="mini"><strong>主な用途</strong><br>誤情報修正、掲載依頼、広告・提携、求人関連。</div>
-          <div class="mini"><strong>ご案内</strong><br>スパム対策のため連絡先メールアドレスは公開していません。</div>
-        </div>
-      </div>
-
-      <aside class="hero-side">
-        <h2 style="margin-top:0;font-size:28px">お問い合わせフォーム</h2>
-        <p class="note" style="margin-top:-4px;margin-bottom:16px">
-          必要事項をご入力のうえ送信してください。
-        </p>
-        <form class="form-wrap" id="contactForm" action="https://formspree.io/f/xlgojvar" method="POST">
+  <main class="container">
+    <section class="hero"><div class="eyebrow">Contact</div><h1>お問い合わせ・掲載相談</h1><p class="lead">掲載修正依頼、新規掲載希望、提携・広告、求人掲載、不具合報告などを受け付けています。下記フォームよりご連絡ください。</p></section>
+    <section class="content">
+      <article class="panel">
+        <h2>受け付け内容</h2>
+        <ul class="list"><li>掲載内容の修正依頼・リンク修正</li><li>新規掲載のご相談</li><li>広告・提携・コラボ相談</li><li>求人掲載のご相談</li><li>表示崩れや不具合報告</li></ul>
+      </article>
+      <aside class="panel">
+        <h2>お問い合わせフォーム</h2>
+        <form id="contactForm" action="https://formspree.io/f/xlgojvar" method="POST">
           <input type="hidden" name="_subject" value="[Nihon Gateway Germany] お問い合わせ">
           <input type="hidden" name="_language" value="ja">
           <input type="text" name="_gotcha" style="display:none">
-
           <div class="form-grid">
-            <div class="field">
-              <label for="name">お名前</label>
-              <input class="input" id="name" name="name" type="text" placeholder="例：山田 太郎" required>
-            </div>
-
-            <div class="field">
-              <label for="email">メールアドレス</label>
-              <input class="input" id="email" name="email" type="email" placeholder="example@email.com" required>
-            </div>
-
-            <div class="field full">
-              <label for="type">お問い合わせ種別</label>
-              <select id="type" name="type" required>
-                <option value="">選択してください</option>
-                <option>一般のお問い合わせ</option>
-                <option>掲載内容の修正依頼</option>
-                <option>新規掲載のご相談</option>
-                <option>広告・提携のご相談</option>
-                <option>求人掲載のご相談</option>
-                <option>不具合報告</option>
-                <option>その他</option>
-              </select>
-            </div>
-
-            <div class="field full">
-              <label for="subject">件名</label>
-              <input class="input" id="subject" name="subject" type="text" placeholder="例：掲載内容の修正について" required>
-            </div>
-
-            <div class="field full">
-              <label for="page_url">対象ページURL（任意）</label>
-              <input class="input" id="page_url" name="page_url" type="url" placeholder="https://yoshi1234567890.github.io/...">
-            </div>
-
-            <div class="field full">
-              <label for="message">内容</label>
-              <textarea id="message" name="message" placeholder="ご用件をできるだけ具体的にご記入ください。対象ページURLや修正内容がある場合はあわせてお書きください。" required></textarea>
-            </div>
+            <div class="field"><label for="name">お名前</label><input class="input" id="name" name="name" type="text" required></div>
+            <div class="field"><label for="email">メールアドレス</label><input class="input" id="email" name="email" type="email" required></div>
+            <div class="field full"><label for="type">お問い合わせ種別</label><select id="type" name="type" required><option value="">選択してください</option><option>一般のお問い合わせ</option><option>掲載内容の修正依頼</option><option>新規掲載のご相談</option><option>広告・提携のご相談</option><option>求人掲載のご相談</option><option>不具合報告</option><option>その他</option></select></div>
+            <div class="field full"><label for="subject">件名</label><input class="input" id="subject" name="subject" type="text" required></div>
+            <div class="field full"><label for="page_url">対象ページURL（任意）</label><input class="input" id="page_url" name="page_url" type="url"></div>
+            <div class="field full"><label for="message">内容</label><textarea id="message" name="message" required></textarea></div>
           </div>
-
           <button class="submit" id="submitButton" type="submit">送信する</button>
           <div class="status-box" id="formStatus" aria-live="polite"></div>
         </form>
       </aside>
     </section>
-
-    <section class="content" style="margin-top:22px">
-      <div class="panel">
-        <h2>受け付けている内容</h2>
-        <ul class="list">
-          <li>サイトや掲載内容に関する一般のお問い合わせ</li>
-          <li>店舗・施設・サービス情報の誤記修正、リンク切れ、更新依頼</li>
-          <li>新規掲載や情報追加の相談</li>
-          <li>広告掲載、提携、コラボレーションの相談</li>
-          <li>求人掲載や採用関連の相談</li>
-          <li>表示崩れ、リンク不具合、動作上の問題の報告</li>
-        </ul>
-
-        <h3>お願い</h3>
-        <p>
-          掲載修正や不具合報告の際は、対象ページのURL、該当箇所、修正希望内容、参考情報などを添えていただくと確認がスムーズです。
-        </p>
-      </div>
-
-      <div class="panel">
-        <h2>連絡方法について</h2>
-        <p>
-          スパム対策および運用上の理由から、連絡先メールアドレスはサイト上に直接掲載していません。
-          お問い合わせはフォーム経由で受け付けています。
-        </p>
-
-        <h3>返信について</h3>
-        <p>通常は 3日以内を目安に確認しますが、内容や時期によって前後する場合があります。</p>
-        <p class="note">Last updated: 2026-03-29</p>
-      </div>
-    </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <strong>Nihon Gateway Germany</strong>
-      <div class="footer-links">
-        <a href="/nihon-gateway-germany/ja/about/">About</a>
-        <a href="/nihon-gateway-germany/ja/contact/">Contact</a>
-        <a href="/nihon-gateway-germany/ja/terms/">Terms</a>
-        <a href="/nihon-gateway-germany/ja/privacy/">Privacy</a>
-        <a href="/nihon-gateway-germany/ja/impressum/">Impressum</a>
-      </div>
-      <p class="note" style="margin-top:14px;color:rgba(255,255,255,.75)">© 2026 Nihon Gateway Germany</p>
-    </div>
-  </footer>
+  <footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><img class="footer-logo" src="../../assets/images/brand/logo_footer.png" alt="Nihon Gateway Germany" /><strong>Nihon Gateway Germany</strong></div><div class="footer-links"><a href="/nihon-gateway-germany/ja/about/">About</a><a href="/nihon-gateway-germany/ja/contact/">Contact</a><a href="/nihon-gateway-germany/ja/terms/">Terms</a><a href="/nihon-gateway-germany/ja/privacy/">Privacy</a><a href="/nihon-gateway-germany/ja/impressum/">Impressum</a></div><small>© 2026 Nihon Gateway Germany</small></div></footer>
 
   <script>
     const form = document.getElementById('contactForm');
@@ -265,21 +73,17 @@
 
     form.addEventListener('submit', async function(event) {
       event.preventDefault();
-
       statusBox.className = 'status-box';
       statusBox.textContent = '';
       submitButton.disabled = true;
       submitButton.textContent = '送信中...';
-
       const formData = new FormData(form);
 
       try {
         const response = await fetch(form.action, {
           method: 'POST',
           body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
+          headers: { 'Accept': 'application/json' }
         });
 
         if (response.ok) {
