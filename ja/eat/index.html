@@ -541,6 +541,7 @@
       gap:14px;
       flex:1;
       min-width:0;
+      position:relative;
     }
     .card-title{
       font-size:22px;
@@ -554,6 +555,31 @@
       color:var(--muted);
       font-size:14px;
       word-break:break-word;
+    }
+    .card-title-block{
+      min-width:0;
+      padding-right:92px;
+    }
+    .card-rating{
+      position:absolute;
+      top:18px;
+      right:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:4px;
+      white-space:nowrap;
+      line-height:1;
+    }
+    .card-rating-score{
+      font-size:16px;
+      font-weight:900;
+      color:#374151;
+    }
+    .card-rating-reviews{
+      font-size:12px;
+      color:#4b5563;
+      font-weight:700;
     }
     .meta-list{display:grid;gap:10px}
     .meta-item{
@@ -1094,12 +1120,26 @@ function buildAddress(item) {
       };
     }
 
-    function getDisplayNameHtml(item) {
-      const parts = getDisplayNameParts(item);
-      if (parts.subtitle) {
-        return `${escapeHtml(parts.title)}<br><span class="card-subtitle">${escapeHtml(parts.subtitle)}</span>`;
-      }
-      return escapeHtml(parts.title);
+    function getCardRatingHtml(item) {
+      const scoreNumber = parseFloat(getField(item, "totalScore"));
+      const hasScore = Number.isFinite(scoreNumber);
+      const reviewsNumber = parseNumber(getField(item, "reviewsCount"));
+      const hasReviews = Number.isFinite(reviewsNumber);
+
+      if (!hasScore && !hasReviews) return "";
+
+      const scoreText = hasScore ? `★${scoreNumber.toFixed(1)}` : "★-";
+      const reviewsText = hasReviews ? `${reviewsNumber.toLocaleString("ja-JP")}件` : "";
+      const ratingLabel = hasReviews
+        ? `評価 ${scoreText.replace("★", "")}、レビュー ${reviewsText}`
+        : `評価 ${scoreText.replace("★", "")}`;
+
+      return `
+        <div class="card-rating" role="img" aria-label="${escapeHtml(ratingLabel)}">
+          <span class="card-rating-score">${escapeHtml(scoreText)}</span>
+          ${reviewsText ? `<span class="card-rating-reviews">${escapeHtml(reviewsText)}</span>` : ""}
+        </div>
+      `;
     }
 
     function getCategory1(item) {
@@ -1280,7 +1320,8 @@ function buildAddress(item) {
       els.statusBox.style.display = "none";
 
       els.cards.innerHTML = filteredItems.map((item) => {
-        const titleHtml = getDisplayNameHtml(item);
+        const displayName = getDisplayNameParts(item);
+        const ratingHtml = getCardRatingHtml(item);
         const category1 = getCategory1(item);
         const category2 = getCategory2(item);
         const website = getField(item, "website");
@@ -1291,9 +1332,11 @@ function buildAddress(item) {
         return `
           <article class="card ${activeItemId === item.__id ? "active-map-item" : ""}" data-item-id="${escapeHtml(item.__id)}">
             <div class="card-body">
-              <div>
-                <h3 class="card-title">${titleHtml}</h3>
+              <div class="card-title-block">
+                <h3 class="card-title">${escapeHtml(displayName.title)}</h3>
+                ${displayName.subtitle ? `<div class="card-subtitle">${escapeHtml(displayName.subtitle)}</div>` : ""}
               </div>
+              ${ratingHtml}
 
               <div class="meta-list">
                 ${category1 ? `<div class="meta-item"><div class="meta-label">カテゴリ</div><div class="meta-value">${escapeHtml(category1)}</div></div>` : ""}
