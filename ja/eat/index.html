@@ -549,11 +549,58 @@
       line-height:1.12;
       word-break:break-word;
     }
+    .card-title-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .card-title-row .card-title{
+      flex:1;
+      min-width:0;
+    }
     .card-subtitle{
       margin-top:4px;
       color:var(--muted);
       font-size:14px;
       word-break:break-word;
+    }
+    .card-rating{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space:nowrap;
+      color:#5f6368;
+      font-weight:700;
+      font-size:13px;
+      line-height:1;
+      margin-top:2px;
+    }
+    .card-rating-score{
+      color:#3c4043;
+      font-weight:800;
+    }
+    .card-stars{
+      --rating:0;
+      position:relative;
+      display:inline-block;
+      font-size:16px;
+      letter-spacing:1px;
+      line-height:1;
+      color:#dadce0;
+    }
+    .card-stars::before{
+      content:"★★★★★";
+    }
+    .card-stars::after{
+      content:"★★★★★";
+      color:#f4b400;
+      position:absolute;
+      left:0;
+      top:0;
+      width:calc((var(--rating) / 5) * 100%);
+      overflow:hidden;
+      white-space:nowrap;
     }
     .meta-list{display:grid;gap:10px}
     .meta-item{
@@ -1061,6 +1108,11 @@
       return Number.isFinite(n) ? n.toLocaleString("ja-JP") + "件" : "";
     }
 
+    function formatReviewsCountForCard(value) {
+      const n = parseNumber(value);
+      return Number.isFinite(n) ? `(${n.toLocaleString("ja-JP")})` : "";
+    }
+
     function preloadCoordinatesFromFields(item) {
   const lat = parseFloat(getField(item, "location/lat", "lat", "latitude"));
   const lng = parseFloat(getField(item, "location/lng", "lng", "lon", "longitude", "long"));
@@ -1100,6 +1152,26 @@ function buildAddress(item) {
         return `${escapeHtml(parts.title)}<br><span class="card-subtitle">${escapeHtml(parts.subtitle)}</span>`;
       }
       return escapeHtml(parts.title);
+    }
+
+    function getCardRatingHtml(item) {
+      const scoreRaw = parseFloat(getField(item, "totalScore"));
+      const score = Number.isFinite(scoreRaw) ? Math.max(0, Math.min(5, scoreRaw)) : null;
+      const reviewsLabel = formatReviewsCountForCard(getField(item, "reviewsCount"));
+      if (score === null && !reviewsLabel) return "";
+
+      const scoreLabel = score !== null ? score.toFixed(1) : "-";
+      const ariaParts = [];
+      if (score !== null) ariaParts.push(`評価 ${scoreLabel}`);
+      if (reviewsLabel) ariaParts.push(`レビュー ${reviewsLabel.replace(/[()]/g, "")}件`);
+
+      return `
+        <div class="card-rating" aria-label="${escapeHtml(ariaParts.join("、"))}">
+          ${score !== null ? `<span class="card-rating-score">${escapeHtml(scoreLabel)}</span>` : ""}
+          ${score !== null ? `<span class="card-stars" style="--rating:${escapeHtml(String(score))}" aria-hidden="true"></span>` : ""}
+          ${reviewsLabel ? `<span class="card-rating-reviews">${escapeHtml(reviewsLabel)}</span>` : ""}
+        </div>
+      `;
     }
 
     function getCategory1(item) {
@@ -1281,6 +1353,7 @@ function buildAddress(item) {
 
       els.cards.innerHTML = filteredItems.map((item) => {
         const titleHtml = getDisplayNameHtml(item);
+        const ratingHtml = getCardRatingHtml(item);
         const category1 = getCategory1(item);
         const category2 = getCategory2(item);
         const website = getField(item, "website");
@@ -1291,8 +1364,9 @@ function buildAddress(item) {
         return `
           <article class="card ${activeItemId === item.__id ? "active-map-item" : ""}" data-item-id="${escapeHtml(item.__id)}">
             <div class="card-body">
-              <div>
+              <div class="card-title-row">
                 <h3 class="card-title">${titleHtml}</h3>
+                ${ratingHtml}
               </div>
 
               <div class="meta-list">
