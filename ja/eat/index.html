@@ -87,6 +87,7 @@
     .brand-logo{
       width:120px;
       height:70px;
+      border-radius:14px;
       object-fit:contain;
       background:transparent;
       border:none;
@@ -113,6 +114,7 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
+    .header-city,
     .header-category,
     .header-language{
       display:flex;
@@ -241,6 +243,8 @@
       border:1px solid rgba(47,128,237,.32);
       cursor:pointer;
     }
+    .header-city select,
+    .header-category select,
     .header-language select{
       border:none;
       background:transparent;
@@ -730,8 +734,27 @@
       }
     }
 
-    @media (max-width: 760px){
-      .header-inner{align-items:flex-start;flex-direction:column}
+    @media (max-width: 780px){
+      .header-inner{
+        min-height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .header-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+      .header-search{
+        width:100%;
+      }
+      .header-search .search-box{
+        flex:1 1 auto;
+      }
+      .header-actions .header-category,
+      .header-actions .header-language{
+        width:max-content;
+      }
       .header-nav{width:100%;justify-content:flex-start}
       .hero-box{padding:26px 20px 22px}
       .cards{grid-template-columns:1fr}
