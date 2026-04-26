@@ -313,6 +313,43 @@
       outline:none;
     }
 
+    .salary-range-box{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:#fff;
+      padding:14px 14px 12px;
+    }
+
+    .salary-range-values{
+      display:flex;
+      justify-content:space-between;
+      color:#3e5ea4;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .salary-range-input{
+      width:100%;
+      accent-color:#56cbd7;
+      margin:8px 0;
+    }
+
+    .salary-range-current{
+      margin-top:6px;
+      font-size:17px;
+      text-align:center;
+      color:#3e5ea4;
+      font-weight:700;
+    }
+
+    .salary-range-current strong{
+      font-size:37px;
+      line-height:1;
+      letter-spacing:.02em;
+      color:#284d9b;
+      margin:0 4px;
+    }
+
     .reset-btn{
       border:none;
       background:transparent;
@@ -746,13 +783,17 @@
       </div>
 
       <div class="field">
-        <label class="label" for="salarySelect">給与帯</label>
-        <select id="salarySelect" class="select">
-          <option value="">すべて</option>
-          <option value="high">年収 65,000€ 以上</option>
-          <option value="mid">年収 50,000€ 以上</option>
-          <option value="entry">年収 40,000€ 以上</option>
-        </select>
+        <label class="label" for="salaryRange">給与帯</label>
+        <div class="salary-range-box">
+          <div class="salary-range-values">
+            <span id="salaryMinText">€10,000</span>
+            <span id="salaryMaxText">€100,000</span>
+          </div>
+          <input id="salaryRange" class="salary-range-input" type="range" min="10000" max="100000" step="5000" value="10000" />
+          <div class="salary-range-current">
+            <span id="salaryPrefix">最低</span><strong id="salaryCurrentValue">10,000</strong><span id="salarySuffix">€/年</span>
+          </div>
+        </div>
       </div>
 
       <div class="field">
@@ -821,8 +862,10 @@
   </footer>
 
   <script>
-    const API_BASE = 'https://script.google.com/macros/s/AKfycbzpVvPrboEPZaFQHf87Q1LPhiU40J03ntX1JicNoA4NOo6ngNWh8knFwJ_9IVkKgTKx/exec';
-    const API_URL = `${API_BASE}?sheet=job&lang=ja&status=active`;
+    const SPREADSHEET_ID = '1oX4Go3yqxZyFkyRTio-YSxE9wZaXy6mfwai42Zot4AU';
+    const SHEET_NAME = 'job';
+    const GID = '1253259572';
+    const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&gid=${GID}&tqx=out:json`;
 
     const JOB_HEADERS = [
       'id',
@@ -838,9 +881,11 @@
       'salary_min_eur',
       'salary_max_eur',
       'salary_label_ja',
+      'salary_label_en',
       'summary_ja',
       'summary_en',
       'job_details_ja',
+      'job_details_en',
       'summary_en_duplicate',
       'requirements_ja',
       'requirements_en',
@@ -864,7 +909,10 @@
       keywordInput: document.getElementById('keywordInput'),
       citySelect: document.getElementById('citySelect'),
       positionSelect: document.getElementById('positionSelect'),
-      salarySelect: document.getElementById('salarySelect'),
+      salaryRange: document.getElementById('salaryRange'),
+      salaryCurrentValue: document.getElementById('salaryCurrentValue'),
+      salaryPrefix: document.getElementById('salaryPrefix'),
+      salarySuffix: document.getElementById('salarySuffix'),
       visaSelect: document.getElementById('visaSelect'),
       typeSelect: document.getElementById('typeSelect'),
       resetBtn: document.getElementById('resetBtn'),
@@ -902,6 +950,15 @@
       return String(value ?? '').trim();
     }
 
+    function tLabel(ja, en){
+      return cardLang === 'en' ? en : ja;
+    }
+
+    function formatEur(value){
+      const n = Number(value || 0);
+      return n.toLocaleString();
+    }
+
     function toNumber(value){
       if (value === null || value === undefined || value === '') return 0;
       const cleaned = String(value).replace(/[^\d.-]/g, '');
@@ -929,32 +986,31 @@
       return {};
     }
 
-    function getRowsFromApiResponse(data){
-      let rows = [];
+    function parseGvizResponse(text){
+      const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+)\);/);
+      if (!match) throw new Error('Unexpected GViz response format');
+      return JSON.parse(match[1]);
+    }
 
-      if (Array.isArray(data)) {
-        rows = data;
-      } else if (Array.isArray(data.items)) {
-        rows = data.items;
-      } else if (Array.isArray(data.rows)) {
-        rows = data.rows;
-      } else if (Array.isArray(data.data)) {
-        rows = data.data;
+    function tableToRows(gvizJson){
+      const cols = (gvizJson?.table?.cols || []).map(col => normalize(col.label || col.id || ''));
+      return (gvizJson?.table?.rows || []).map(row => {
+        const obj = {};
+        (row.c || []).forEach((cell, index) => {
+          obj[cols[index] || `col_${index}`] = cell?.v ?? '';
+        });
+        return obj;
+      });
+    }
+
+    async function fetchSpreadsheetRows(){
+      const res = await fetch(API_URL, { cache: 'no-store' });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-
-      if (rows.length && Array.isArray(rows[0])) {
-        const firstRow = rows[0].map(v => normalize(v));
-        const looksLikeHeader =
-          firstRow.includes('id') &&
-          firstRow.includes('status') &&
-          firstRow.includes('company_name');
-
-        if (looksLikeHeader) {
-          rows = rows.slice(1);
-        }
-      }
-
-      return rows;
+      const text = await res.text();
+      const json = parseGvizResponse(text);
+      return tableToRows(json);
     }
 
     function getValue(row, key){
@@ -987,6 +1043,7 @@
         salary_min_eur: toNumber(getValue(r, 'salary_min_eur')),
         salary_max_eur: toNumber(getValue(r, 'salary_max_eur')),
         salary_label_ja: getValue(r, 'salary_label_ja'),
+        salary_label_en: getValue(r, 'salary_label_en'),
 
         summary_ja: getValue(r, 'summary_ja'),
         summary_en: summaryEn,
@@ -1021,17 +1078,24 @@
     }
 
     function getSalaryLabel(job){
+      if (cardLang === 'en' && job.salary_label_en) return job.salary_label_en;
       if (job.salary_label_ja) return job.salary_label_ja;
 
       if (job.salary_min_eur && job.salary_max_eur) {
+        if (cardLang === 'en') {
+          return `€${formatEur(job.salary_min_eur)} - €${formatEur(job.salary_max_eur)} / year`;
+        }
         return `年収 ${job.salary_min_eur.toLocaleString()}€〜${job.salary_max_eur.toLocaleString()}€`;
       }
 
       if (job.salary_min_eur) {
+        if (cardLang === 'en') {
+          return `From €${formatEur(job.salary_min_eur)} / year`;
+        }
         return `年収 ${job.salary_min_eur.toLocaleString()}€〜`;
       }
 
-      return '給与情報なし';
+      return tLabel('給与情報なし', 'No salary info');
     }
 
     function isVisaYes(job){
@@ -1079,14 +1143,7 @@
       els.detailPanel.innerHTML = '<h3>読み込み中...</h3><p class="sub">Spreadsheetから求人データを取得しています。</p>';
 
       try {
-        const res = await fetch(API_URL, { cache: 'no-store' });
-
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-
-        const data = await res.json();
-        const rows = getRowsFromApiResponse(data);
+        const rows = await fetchSpreadsheetRows();
 
         jobs = rows
           .map(normalizeJob)
@@ -1114,7 +1171,7 @@
         els.cards.innerHTML = '';
         els.chips.innerHTML = '';
         els.emptyBox.style.display = 'block';
-        els.emptyBox.textContent = '求人データを読み込めませんでした。GASの公開設定、API URL、sheet名を確認してください。';
+        els.emptyBox.textContent = '求人データを読み込めませんでした。Spreadsheetの公開設定、sheet名を確認してください。';
         els.resultsSummary.textContent = '読み込みエラー';
 
         els.detailPanel.innerHTML = `
@@ -1123,10 +1180,10 @@
           <section class="detail-sec">
             <h4>確認ポイント</h4>
             <ul>
-              <li>GASのデプロイが「全員」に公開されているか</li>
-              <li>API URLのdeploy IDが正しいか</li>
+              <li>Spreadsheetが閲覧可能（公開またはアクセス許可済み）か</li>
+              <li>Spreadsheet IDが正しいか</li>
               <li>Spreadsheetのタブ名が「job」か</li>
-              <li>GAS側がJSONを返しているか</li>
+              <li>ヘッダー名が定義済み項目と一致しているか</li>
             </ul>
           </section>
         `;
@@ -1137,7 +1194,7 @@
       const keyword = normalize(els.keywordInput.value);
       const cityJa = els.citySelect.value;
       const positionJa = els.positionSelect.value;
-      const salaryFilter = els.salarySelect.value;
+      const salaryMin = toNumber(els.salaryRange.value);
       const visa = els.visaSelect.value;
       const typeJa = els.typeSelect.value;
 
@@ -1168,11 +1225,7 @@
           (visa === 'yes' && isVisaYes(job)) ||
           (visa === 'no' && !isVisaYes(job));
 
-        const matchSalary =
-          !salaryFilter ||
-          (salaryFilter === 'high' && job.salary_min_eur >= 65000) ||
-          (salaryFilter === 'mid' && job.salary_min_eur >= 50000) ||
-          (salaryFilter === 'entry' && job.salary_min_eur >= 40000);
+        const matchSalary = !salaryMin || job.salary_min_eur >= salaryMin;
 
         return matchKeyword && matchCity && matchPosition && matchType && matchVisa && matchSalary;
       });
@@ -1206,8 +1259,8 @@
         chips.push(`職種: ${escapeHtml(els.positionSelect.value)}`);
       }
 
-      if (els.salarySelect.value) {
-        chips.push(`給与帯: ${escapeHtml(els.salarySelect.options[els.salarySelect.selectedIndex].text)}`);
+      if (toNumber(els.salaryRange.value) > 10000) {
+        chips.push(`${tLabel('給与帯', 'Salary')}: ${tLabel('年収', 'From')} €${escapeHtml(formatEur(els.salaryRange.value))}`);
       }
 
       if (els.visaSelect.value) {
@@ -1252,16 +1305,16 @@
             </div>
 
             <dl class="meta">
-              <dt>給与</dt>
+              <dt>${tLabel('給与', 'Salary')}</dt>
               <dd>${escapeHtml(salary)}</dd>
 
-              <dt>都市</dt>
+              <dt>${tLabel('都市', 'City')}</dt>
               <dd>${escapeHtml(city)}</dd>
 
-              <dt>職種</dt>
+              <dt>${tLabel('職種', 'Role')}</dt>
               <dd>${escapeHtml(position)}</dd>
 
-              <dt>概要</dt>
+              <dt>${tLabel('概要', 'Summary')}</dt>
               <dd>${escapeHtml(summary)}</dd>
             </dl>
           </article>
@@ -1289,21 +1342,21 @@
 
       if (!job){
         els.detailPanel.innerHTML = `
-          <h3>求人を選択してください</h3>
-          <p class="sub">カードをクリックすると詳細を表示します。</p>
+          <h3>${tLabel('求人を選択してください', 'Select a job')}</h3>
+          <p class="sub">${tLabel('カードをクリックすると詳細を表示します。', 'Click a card to view details.')}</p>
         `;
         return;
       }
 
-      const company = job.company_name || '会社名未設定';
-      const position = getL10n(job,'position_title') || '職種未設定';
-      const type = getL10n(job,'employment_type') || '雇用形態未設定';
+      const company = job.company_name || tLabel('会社名未設定', 'Company not set');
+      const position = getL10n(job,'position_title') || tLabel('職種未設定', 'Role not set');
+      const type = getL10n(job,'employment_type') || tLabel('雇用形態未設定', 'Employment type not set');
       const salary = getSalaryLabel(job);
-      const city = getL10n(job,'city') || '勤務地未設定';
-      const visa = getL10n(job,'visa_support') || '未記載';
-      const updated = job.updated_at || '未記載';
+      const city = getL10n(job,'city') || tLabel('勤務地未設定', 'Location not set');
+      const visa = getL10n(job,'visa_support') || tLabel('未記載', 'Not specified');
+      const updated = job.updated_at || tLabel('未記載', 'Not specified');
       const email = job.contact_email || '';
-      const details = getL10n(job,'job_details') || getL10n(job,'summary') || '職務詳細は準備中です。';
+      const details = getL10n(job,'job_details') || getL10n(job,'summary') || tLabel('職務詳細は準備中です。', 'Job details are being prepared.');
       const requirements = splitRequirements(getL10n(job,'requirements'));
       const comment = getL10n(job,'free_comment') || '';
 
@@ -1313,65 +1366,75 @@
 
         <div class="detail-grid">
           <div class="detail-item">
-            <div class="k">雇用形態</div>
+            <div class="k">${tLabel('雇用形態', 'Employment Type')}</div>
             <div>${escapeHtml(type)}</div>
           </div>
 
           <div class="detail-item">
-            <div class="k">給与</div>
+            <div class="k">${tLabel('給与', 'Salary')}</div>
             <div>${escapeHtml(salary)}</div>
           </div>
 
           <div class="detail-item">
-            <div class="k">勤務地</div>
+            <div class="k">${tLabel('勤務地', 'Location')}</div>
             <div>${escapeHtml(city)}</div>
           </div>
 
           <div class="detail-item">
-            <div class="k">ビザ</div>
+            <div class="k">${tLabel('ビザサポート', 'Visa Support')}</div>
             <div>${escapeHtml(visa)}</div>
           </div>
 
           <div class="detail-item">
-            <div class="k">更新日</div>
+            <div class="k">${tLabel('更新日', 'Updated')}</div>
             <div>${escapeHtml(updated)}</div>
           </div>
 
           <div class="detail-item">
-            <div class="k">連絡先</div>
+            <div class="k">${tLabel('連絡先', 'Contact')}</div>
             <div>
-              ${email ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>` : '未記載'}
+              ${email ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>` : tLabel('未記載', 'Not specified')}
             </div>
           </div>
         </div>
 
         <section class="detail-sec">
-          <h4>職務詳細</h4>
+          <h4>${tLabel('職務詳細', 'Job Details')}</h4>
           <p>${escapeHtml(details)}</p>
         </section>
 
         <section class="detail-sec">
-          <h4>必要要件・経験</h4>
+          <h4>${tLabel('必要要件・経験', 'Requirements & Experience')}</h4>
           ${
             requirements.length
               ? `<ul>${requirements.map(r => `<li>${escapeHtml(r)}</li>`).join('')}</ul>`
-              : '<p>未記載</p>'
+              : `<p>${tLabel('未記載', 'Not specified')}</p>`
           }
         </section>
 
         ${
           comment
-            ? `<section class="detail-sec"><h4>自由コメント</h4><p>${escapeHtml(comment)}</p></section>`
+            ? `<section class="detail-sec"><h4>${tLabel('自由コメント', 'Additional Comment')}</h4><p>${escapeHtml(comment)}</p></section>`
             : ''
         }
       `;
+    }
+
+    function renderSalaryRangeValue(){
+      const salaryMin = toNumber(els.salaryRange.value);
+      els.salaryCurrentValue.textContent = formatEur(salaryMin);
+      els.salaryPrefix.textContent = tLabel('最低', 'From');
+      els.salarySuffix.textContent = tLabel('€/年', '€/year');
     }
 
     function attachEvents(){
       els.keywordInput.addEventListener('input', filterJobs);
       els.citySelect.addEventListener('change', filterJobs);
       els.positionSelect.addEventListener('change', filterJobs);
-      els.salarySelect.addEventListener('change', filterJobs);
+      els.salaryRange.addEventListener('input', () => {
+        renderSalaryRangeValue();
+        filterJobs();
+      });
       els.visaSelect.addEventListener('change', filterJobs);
       els.typeSelect.addEventListener('change', filterJobs);
 
@@ -1379,7 +1442,8 @@
         els.keywordInput.value = '';
         els.citySelect.value = '';
         els.positionSelect.value = '';
-        els.salarySelect.value = '';
+        els.salaryRange.value = '10000';
+        renderSalaryRangeValue();
         els.visaSelect.value = '';
         els.typeSelect.value = '';
         filterJobs();
@@ -1391,6 +1455,8 @@
         els.cardLangEn.classList.remove('active');
         renderCards();
         renderDetail();
+        renderSalaryRangeValue();
+        renderChips();
       });
 
       els.cardLangEn.addEventListener('click', () => {
@@ -1399,10 +1465,13 @@
         els.cardLangJa.classList.remove('active');
         renderCards();
         renderDetail();
+        renderSalaryRangeValue();
+        renderChips();
       });
     }
 
     attachEvents();
+    renderSalaryRangeValue();
     loadJobs();
   </script>
 </body>
