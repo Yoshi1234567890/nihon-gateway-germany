@@ -856,24 +856,14 @@
     const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=out:json`;
 
     const JOB_HEADERS = [
-      'id',
-      'status',
-      'priority',
-      'company_name',
-      'position_title_ja',
-      'position_title_en',
-      'employment_type_ja',
-      'employment_type_en',
       'city_ja',
       'city_en',
       'salary_min_eur',
       'salary_max_eur',
-      'salary_label_ja',
-      'salary_label_en',
       'summary_ja',
       'summary_en',
       'job_details_ja',
-      'summary_en_duplicate',
+      'job_details_en',
       'requirements_ja',
       'requirements_en',
       'contact_email',
@@ -1100,12 +1090,12 @@
       return clean(row[key]);
     }
 
+    function getComparableField(job, key){
+      return job[`${key}_ja`] || job[`${key}_en`] || '';
+    }
+
     function normalizeJob(row, index){
       const r = normalizeRow(row);
-
-      const summaryEn =
-        getValue(r, 'summary_en') ||
-        getValue(r, 'summary_en_duplicate');
 
       return {
         id: getValue(r, 'id') || `job-${index + 1}`,
@@ -1129,7 +1119,7 @@
         salary_label_en: getValue(r, 'salary_label_en'),
 
         summary_ja: getValue(r, 'summary_ja'),
-        summary_en: summaryEn,
+        summary_en: getValue(r, 'summary_en'),
 
         job_details_ja: getValue(r, 'job_details_ja'),
         job_details_en: getValue(r, 'job_details_en'),
@@ -1197,18 +1187,18 @@
       resetSelectOptions(els.positionSelect);
       resetSelectOptions(els.typeSelect);
 
-      const citySet = [...new Set(jobs.map(j => j.city_ja).filter(Boolean))]
+      const citySet = [...new Set(jobs.map(j => getComparableField(j, 'city')).filter(Boolean))]
         .sort((a,b) => a.localeCompare(b,'ja'));
 
-      const positionSet = [...new Set(jobs.map(j => j.position_title_ja).filter(Boolean))]
+      const positionSet = [...new Set(jobs.map(j => getComparableField(j, 'position_title')).filter(Boolean))]
         .sort((a,b) => a.localeCompare(b,'ja'));
 
-      const typeSet = [...new Set(jobs.map(j => j.employment_type_ja).filter(Boolean))]
+      const typeSet = [...new Set(jobs.map(j => getComparableField(j, 'employment_type')).filter(Boolean))]
         .sort((a,b) => a.localeCompare(b,'ja'));
 
       els.citySelect.innerHTML += citySet
         .map(city => {
-          const job = jobs.find(j => j.city_ja === city);
+          const job = jobs.find(j => getComparableField(j, 'city') === city);
           const label = (cardLang === 'en' ? job?.city_en : job?.city_ja) || city;
           return `<option value="${escapeHtml(city)}">${escapeHtml(label)}</option>`;
         })
@@ -1216,7 +1206,7 @@
 
       els.positionSelect.innerHTML += positionSet
         .map(position => {
-          const job = jobs.find(j => j.position_title_ja === position);
+          const job = jobs.find(j => getComparableField(j, 'position_title') === position);
           const label = (cardLang === 'en' ? job?.position_title_en : job?.position_title_ja) || position;
           return `<option value="${escapeHtml(position)}">${escapeHtml(label)}</option>`;
         })
@@ -1224,7 +1214,7 @@
 
       els.typeSelect.innerHTML += typeSet
         .map(type => {
-          const job = jobs.find(j => j.employment_type_ja === type);
+          const job = jobs.find(j => getComparableField(j, 'employment_type') === type);
           const label = (cardLang === 'en' ? job?.employment_type_en : job?.employment_type_ja) || type;
           return `<option value="${escapeHtml(type)}">${escapeHtml(label)}</option>`;
         })
@@ -1294,11 +1284,11 @@
 
     function filterJobs(){
       const keyword = normalize(els.keywordInput.value);
-      const cityJa = els.citySelect.value;
-      const positionJa = els.positionSelect.value;
+      const cityValue = els.citySelect.value;
+      const positionValue = els.positionSelect.value;
       const salaryMin = Number(els.salaryRange.value) + 10000;
       const visa = els.visaSelect.value;
-      const typeJa = els.typeSelect.value;
+      const typeValue = els.typeSelect.value;
 
       filtered = jobs.filter(job => {
         const text = normalize([
@@ -1318,9 +1308,9 @@
         ].join(' '));
 
         const matchKeyword = !keyword || text.includes(keyword);
-        const matchCity = !cityJa || job.city_ja === cityJa;
-        const matchPosition = !positionJa || job.position_title_ja === positionJa;
-        const matchType = !typeJa || job.employment_type_ja === typeJa;
+        const matchCity = !cityValue || getComparableField(job, 'city') === cityValue;
+        const matchPosition = !positionValue || getComparableField(job, 'position_title') === positionValue;
+        const matchType = !typeValue || getComparableField(job, 'employment_type') === typeValue;
 
         const matchVisa =
           !visa ||
