@@ -1,0 +1,81 @@
+/* ===============================
+   Cookie Banner
+=============================== */
+
+#cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  background: rgba(20, 20, 20, 0.95);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 9999;
+  padding: 16px 20px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.cookie-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.cookie-text {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ボタン */
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cookie-actions button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+/* 同意 */
+#cookie-accept {
+  background: #ffffff;
+  color: #000;
+}
+
+#cookie-accept:hover {
+  background: #e6e6e6;
+}
+
+/* 拒否 */
+#cookie-decline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+#cookie-decline:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* モバイル */
+@media (max-width: 600px) {
+  .cookie-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cookie-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
