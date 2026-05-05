@@ -352,7 +352,7 @@
       background: var(--surface);
       box-shadow: 0 12px 30px rgba(67, 49, 30, 0.07);
       display: grid;
-      grid-template-columns: 1.4fr repeat(5, 1fr);
+      grid-template-columns: 1.4fr repeat(6, 1fr);
       gap: 12px;
       margin-bottom: 18px;
     }
@@ -783,6 +783,20 @@
           <option value="ai">AI</option>
           <option value="prompt">プロンプト</option>
           <option value="course">コース</option>
+          <option value="class">クラス</option>
+          <option value="flashcard">単語カード</option>
+        </select>
+
+
+        <select id="purposeFilter">
+          <option value="all">すべての目的タグ</option>
+          <option value="daily-life">生活</option>
+          <option value="work">仕事</option>
+          <option value="exam">試験</option>
+          <option value="conversation">会話</option>
+          <option value="vocabulary">単語</option>
+          <option value="ai">AI学習</option>
+          <option value="community">コミュニティ</option>
         </select>
 
         <select id="typeFilter">
