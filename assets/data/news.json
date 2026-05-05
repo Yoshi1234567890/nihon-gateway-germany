@@ -1,43 +1,40 @@
-<section class="news-controls">
-  <input id="newsSearch" type="search" placeholder="キーワードで検索">
-
-  <select id="countryFilter">
-    <option value="all">すべての国</option>
-    <option value="germany">ドイツ</option>
-    <option value="japan">日本</option>
-    <option value="eu">EU</option>
-  </select>
-
-  <select id="cityFilter">
-    <option value="all">すべての都市</option>
-    <option value="duesseldorf">Düsseldorf</option>
-    <option value="nrw">NRW</option>
-    <option value="berlin">Berlin</option>
-    <option value="frankfurt">Frankfurt</option>
-    <option value="nationwide">全国</option>
-  </select>
-
-  <select id="categoryFilter">
-    <option value="all">すべてのカテゴリ</option>
-    <option value="life">生活</option>
-    <option value="transport">交通</option>
-    <option value="visa">ビザ・行政</option>
-    <option value="law">法律</option>
-    <option value="work">仕事・経済</option>
-    <option value="medical">医療</option>
-    <option value="travel">観光・イベント</option>
-    <option value="safety">災害・安全</option>
-  </select>
-
-  <select id="importanceFilter">
-    <option value="all">すべての重要度</option>
-    <option value="important">重要</option>
-    <option value="impact">生活影響あり</option>
-    <option value="check">要確認</option>
-    <option value="normal">通常</option>
-  </select>
-</section>
-
-<section id="newsGrid" class="news-grid"></section>
-
-<script src="../../assets/js/news.js"></script>
+[
+  {
+    "id": "de-demo-001",
+    "country": "germany",
+    "country_ja": "ドイツ",
+    "city": "nrw",
+    "city_ja": "NRW",
+    "category": "transport",
+    "category_ja": "交通",
+    "topic": "construction",
+    "topic_ja": "工事・運休",
+    "importance": "impact",
+    "importance_ja": "生活影響あり",
+    "source_type": "transport",
+    "source_name": "Deutsche Bahn",
+    "title": "NRW州の一部区間で工事による運休予定",
+    "summary": "工事により、一部路線で遅延や運休が発生する可能性があります。移動前に公式情報を確認してください。",
+    "published_at": "2026-05-05",
+    "url": "https://www.bahn.de/"
+  },
+  {
+    "id": "de-demo-002",
+    "country": "germany",
+    "country_ja": "ドイツ",
+    "city": "nationwide",
+    "city_ja": "全国",
+    "category": "life",
+    "category_ja": "生活",
+    "topic": "general",
+    "topic_ja": "生活情報",
+    "importance": "normal",
+    "importance_ja": "通常",
+    "source_type": "media",
+    "source_name": "Deutsche Welle",
+    "title": "ドイツ生活に関する最新ニュース",
+    "summary": "ドイツ国内の生活・社会に関するニュースです。詳細は出典元をご確認ください。",
+    "published_at": "2026-05-05",
+    "url": "https://www.dw.com/"
+  }
+]
