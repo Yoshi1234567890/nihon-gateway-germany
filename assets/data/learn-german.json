@@ -1,0 +1,20 @@
+{
+  "id": "daily-auslaender-email-001",
+  "status": "published",
+  "priority": "high",
+  "title_ja": "外人局にFiktionsbescheinigungの更新を催促するメール",
+  "summary_ja": "滞在許可やFiktionsbescheinigungの更新状況を丁寧に確認するメールテンプレートです。",
+  "layer1": "daily",
+  "layer2": "auslaenderbehoerde",
+  "level": ["A2", "B1"],
+  "purpose": ["daily-life", "visa"],
+  "scene": ["email", "immigration-office"],
+  "skill": ["writing"],
+  "format": ["template", "phrases"],
+  "content_type": "original",
+  "source_type": "nihon-gateway",
+  "price": "free",
+  "url": "./articles/daily/auslaenderbehoerde-fiktionsbescheinigung-email.html",
+  "cta_label": "開く",
+  "recommended_use_ja": "外人局への問い合わせ・催促メール"
+}
