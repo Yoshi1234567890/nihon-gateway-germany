@@ -5,6 +5,7 @@ const searchInput = document.getElementById("resourceSearch");
 const levelFilter = document.getElementById("levelFilter");
 const layerFilter = document.getElementById("layerFilter");
 const formatFilter = document.getElementById("formatFilter");
+const purposeFilter = document.getElementById("purposeFilter");
 const typeFilter = document.getElementById("typeFilter");
 const priceFilter = document.getElementById("priceFilter");
 const levelButtons = document.querySelectorAll("[data-level-shortcut]");
@@ -101,6 +102,7 @@ function applyFilters() {
   const level = levelFilter?.value || "all";
   const layer = layerFilter?.value || "all";
   const format = formatFilter?.value || "all";
+  const purpose = purposeFilter?.value || "all";
   const type = typeFilter?.value || "all";
   const price = priceFilter?.value || "all";
 
@@ -125,6 +127,7 @@ function applyFilters() {
       (level === "all" || formatArray(item.level).includes(level)) &&
       (layer === "all" || item.layer1 === layer) &&
       (format === "all" || formatArray(item.format).includes(format)) &&
+      (purpose === "all" || formatArray(item.purpose).includes(purpose)) &&
       (type === "all" || item.content_type === type) &&
       (price === "all" || item.price === price)
     );
@@ -166,7 +169,7 @@ function escapeAttribute(value) {
   return escapeHtml(value);
 }
 
-[searchInput, levelFilter, layerFilter, formatFilter, typeFilter, priceFilter]
+[searchInput, levelFilter, layerFilter, formatFilter, purposeFilter, typeFilter, priceFilter]
   .filter(Boolean)
   .forEach(element => {
     element.addEventListener("input", applyFilters);
