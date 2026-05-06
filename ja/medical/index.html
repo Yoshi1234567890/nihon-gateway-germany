@@ -1401,7 +1401,18 @@
 
       els.cards.appendChild(frag);
     }
+function scrollToActiveCard(id) {
+  requestAnimationFrame(() => {
+    const card = els.cards.querySelector(`[data-id="${CSS.escape(id)}"]`);
+    if (!card) return;
 
+    card.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest"
+    });
+  });
+}
     function ensureMap() {
       if (map) return;
 
@@ -1479,11 +1490,12 @@
 
         const marker = L.marker([lat, lng]).addTo(markerLayer);
         marker.bindPopup(popupHtml(item));
-        marker.on("click", () => {
-          activeId = item.id;
-          renderCards();
-        });
-
+marker.on("click", () => {
+  activeId = item.id;
+  renderCards();
+  marker.openPopup();
+  scrollToActiveCard(item.id);
+});
         markerMap.set(item.id, marker);
         bounds.extend([lat, lng]);
       }
