@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medical | 医療・病院 | Nihon Gateway Germany</title>
-  <meta name="description" content="デュッセルドルフの病院、クリニック、家庭医などの医療情報を日本語で見やすく整理。カテゴリ、エリア、住所、地図リンクをまとめて確認できます。" />
+  <meta name="description" content="デュッセルドルフの病院、クリニック、家庭医などの医療情報を日本語で見やすく整理。カテゴリ、エリア、住所、公式サイト、地図リンクをまとめて確認できます。" />
   <meta name="theme-color" content="#f7f3ee" />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/medical/" />
@@ -16,10 +16,6 @@
   <meta property="og:url" content="https://yoshi1234567890.github.io/nihon-gateway-germany/ja/medical/" />
   <meta property="og:locale" content="ja_JP" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
-
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -29,27 +25,17 @@
 
   <style>
     :root{
-      --bg:#f7f8fa;
-      --surface:#ffffff;
-      --surface:#fbfcfd;
-      --line:#e6eaf0;
-      --line-strong:#d9e0e8;
-      --text:#16202a;
-      --muted:#5f6b76;
-      --muted-2:#7d8893;
-      --brand:#d84b6a;
-      --brand-dark:#bc3856;
-      --hover-pink:#f3c8d4;
-      --hover-pink-bg:#fff4f7;
-      --accent:#2f80ed;
-      --shadow:0 12px 32px rgba(19,35,58,.12);
-      --shadow-hover:0 18px 42px rgba(19,35,58,.12);
-
       --red:#e8002d;
+      --orange:#ff6b2b;
+      --yellow:#ffc93c;
+      --teal:#00b4a6;
+      --blue:#2f6df5;
+      --purple:#7c3aed;
       --pink:#f472b6;
       --cream:#fdf8f2;
       --paper:#fffdf9;
       --ink:#1a1014;
+      --muted:#6b5e68;
       --border:#ede5e0;
       --card-shadow:0 10px 30px rgba(26,16,20,.07);
       --radius-xl:28px;
@@ -57,30 +43,26 @@
       --radius-md:14px;
       --radius-sm:10px;
       --max:1280px;
-      --container:1220px;
       --map-height:calc(100vh - 120px);
+      --brand:#d84b6a;
+      --hover-pink:#f3c8d4;
+      --hover-pink-bg:#fff4f7;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
-      font-family:'Inter','Noto Sans JP',sans-serif;
-      color:var(--text);
-      line-height:1.6;
+      font-family:'Outfit','Noto Sans JP','Hiragino Sans','Yu Gothic UI',sans-serif;
       background:
         linear-gradient(rgba(247,248,250,.78), rgba(247,248,250,.82)),
         url("../../assets/images/brand/site-bg.jpg") center top / cover fixed no-repeat,
-        var(--bg);
+        var(--cream);
+      color:var(--ink);
+      line-height:1.6;
     }
 
-    img{max-width:100%;display:block}
-    a{color:inherit;text-decoration:none}
+    a{text-decoration:none;color:inherit}
     button,input,select{font:inherit}
-
-    .container{
-      width:min(var(--container), calc(100% - 32px));
-      margin:0 auto;
-    }
 
     .site-header{
       position:sticky;
@@ -89,6 +71,11 @@
       background:rgba(255,255,255,.84);
       backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(230,234,240,.92);
+    }
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
     }
 
     .header-inner{
@@ -142,6 +129,162 @@
       justify-content:flex-end;
     }
 
+    .header-city,
+    .header-category,
+    .header-language{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid #e6eaf0;
+      background:#fff;
+      color:var(--muted);
+      font-size:13px;
+      transition:all .18s ease;
+    }
+
+    .header-category:hover,
+    .header-language:hover{
+      border-color:#f3c8d4;
+      background:#fff4f7;
+      transform:translateY(-1px);
+    }
+
+    .header-category-menu{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .header-category-menu::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:100%;
+      width:100%;
+      height:12px;
+    }
+
+    .header-category-trigger{
+      border:none;
+      background:transparent;
+      color:var(--ink);
+      font-weight:700;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .header-category-menu::after{
+      content:"▾";
+      font-size:24px;
+      line-height:1;
+      color:var(--muted);
+      margin-top:1px;
+      pointer-events:none;
+    }
+
+    .category-dropdown{
+      position:absolute;
+      top:calc(100% + 8px);
+      left:0;
+      min-width:220px;
+      background:#fff;
+      border:1px solid #e6eaf0;
+      border-radius:14px;
+      box-shadow:0 16px 30px rgba(19,35,58,.14);
+      padding:8px;
+      display:none;
+      z-index:20;
+    }
+
+    .header-category-menu:hover .category-dropdown,
+    .header-category-menu:focus-within .category-dropdown{
+      display:grid;
+      gap:2px;
+    }
+
+    .category-dropdown a{
+      text-decoration:none;
+      font-size:13px;
+      color:#2f3e4c;
+      padding:8px 10px;
+      border-radius:10px;
+    }
+
+    .category-dropdown a:hover{
+      background:#fff4f7;
+      border:1px solid #f3c8d4;
+      color:#d84b6a;
+      transform:translateY(-1px);
+    }
+
+    .header-search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .search-box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(255,255,255,.96);
+      border:1px solid #d9e0e8;
+      border-radius:14px;
+      padding:0 14px;
+    }
+
+    .search-box span{
+      color:#7d8893;
+      font-size:18px;
+    }
+
+    .search-box input{
+      flex:1;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--ink);
+    }
+
+    .header-search .search-box{
+      min-width:220px;
+      height:42px;
+      border-radius:999px;
+      padding:0 12px;
+    }
+
+    .header-search .search-box span{font-size:19px}
+    .header-search .search-box input{font-size:13px}
+
+    .header-search .search-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:42px;
+      border-radius:999px;
+      padding:0 14px;
+      font-size:24px;
+      line-height:1;
+      color:#1f5fbf;
+      background:rgba(47,128,237,.20);
+      border:1px solid rgba(47,128,237,.32);
+      cursor:pointer;
+    }
+
+    .header-city select,
+    .header-category select,
+    .header-language select{
+      border:none;
+      background:transparent;
+      color:var(--ink);
+      font-weight:700;
+      outline:none;
+    }
+
     .header-nav{
       display:flex;
       align-items:center;
@@ -175,386 +318,200 @@
       transform:translateY(-1px);
     }
 
-    .header-search{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .header-city,
-    .header-category,
-    .header-language{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--muted);
-      font-size:13px;
-      transition:all .18s ease;
-    }
-
-    .header-category:hover,
-    .header-language:hover{
-      border-color:var(--hover-pink);
-      background:var(--hover-pink-bg);
-      transform:translateY(-1px);
-    }
-
-    .header-category-menu{
-      position:relative;
-      display:flex;
-      align-items:center;
-    }
-
-    .header-category-menu::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:100%;
-      width:100%;
-      height:12px;
-    }
-
-    .header-category-trigger{
-      border:none;
-      background:transparent;
-      color:var(--text);
-      font-weight:700;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .header-category-menu::after{
-      content:"▾";
-      font-size:24px;
-      line-height:1;
-      color:var(--muted);
-      margin-top:1px;
-      pointer-events:none;
-    }
-
-    .category-dropdown{
-      position:absolute;
-      top:calc(100% + 8px);
-      left:0;
-      min-width:220px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      box-shadow:0 16px 30px rgba(19,35,58,.14);
-      padding:8px;
-      display:none;
-      z-index:20;
-    }
-
-    .header-category-menu:hover .category-dropdown,
-    .header-category-menu:focus-within .category-dropdown{
-      display:grid;
-      gap:2px;
-    }
-
-    .category-dropdown a{
-      text-decoration:none;
-      font-size:13px;
-      color:#2f3e4c;
-      padding:8px 10px;
-      border-radius:10px;
-      border:1px solid transparent;
-    }
-
-    .category-dropdown a:hover{
-      background:var(--hover-pink-bg);
-      border-color:var(--hover-pink);
-      color:var(--brand);
-      transform:translateY(-1px);
-    }
-
-    .header-city select,
-    .header-category select,
-    .header-language select{
-      border:none;
-      background:transparent;
-      color:var(--text);
-      font-weight:700;
-      outline:none;
-    }
-
-    .search-box{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line-strong);
-      border-radius:14px;
-      padding:0 14px;
-    }
-
-    .search-box span{
-      color:var(--muted-2);
-      font-size:18px;
-    }
-
-    .search-box input{
-      flex:1;
-      border:none;
-      outline:none;
-      min-width:170px;
-      padding:10px 0;
-      font-size:13px;
-      color:var(--text);
-      background:transparent;
-    }
-
-    .search-box input::placeholder{color:#94a0ad}
-
-    .header-search .search-box{
-      min-width:220px;
-      height:42px;
-      border-radius:999px;
-      padding:0 12px;
-    }
-
-    .header-search .search-box span{font-size:19px}
-    .header-search .search-box input{font-size:13px}
-
-    .search-btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      height:42px;
-      border-radius:999px;
-      padding:0 14px;
-      font-size:24px;
-      line-height:1;
-      color:#1f5fbf;
-      background:rgba(47,128,237,.20);
-      border:1px solid rgba(47,128,237,.32);
-      cursor:pointer;
-    }
-
-    .search-btn:hover{
-      transform:translateY(-1px);
-      filter:brightness(.96);
-    }
-
-    .header-language select{
-      border:none;
-      outline:none;
-      background:transparent;
-      color:var(--text);
-      font-size:13px;
-      cursor:pointer;
-    }
-
     .hero{
-      padding:clamp(20px,4vw,36px) 16px 6px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:36px 20px 20px;
     }
 
     .hero-box{
-      width:min(var(--max),100%);
-      margin:0 auto;
-      background:linear-gradient(125deg,#fff6fb 0%, #fff 45%, #f8fbff 100%);
-      border:1px solid #f0dae4;
-      border-radius:var(--radius-xl);
-      padding:clamp(24px,4vw,40px);
-      box-shadow:0 14px 34px rgba(28,30,45,.08);
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.32) 42%, rgba(255,255,255,.18) 60%, rgba(255,255,255,.08) 100%),
+        url("../../assets/images/hero/top-hero.jpg") center center / cover no-repeat,
+        #fff;
+      border:1px solid #d9e0e8;
+      border-radius:34px;
+      padding:32px 28px 26px;
+      box-shadow:var(--card-shadow);
     }
 
     .eyebrow{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      background:#fff;
-      color:#8d4f65;
-      border:1px solid #f4d7e2;
-      border-radius:999px;
-      padding:6px 12px;
       font-size:12px;
-      font-weight:700;
-      letter-spacing:.08em;
+      font-weight:900;
+      letter-spacing:.16em;
       text-transform:uppercase;
+      color:var(--red);
+      margin-bottom:14px;
     }
 
     .eyebrow-dot{
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:linear-gradient(135deg,var(--red),var(--pink));
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--red),var(--orange));
+      flex:0 0 auto;
     }
 
     .hero h1{
-      margin-top:16px;
-      font-size:clamp(28px,5.4vw,52px);
-      line-height:1.08;
-      letter-spacing:-.02em;
-      max-width:17ch;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      max-width:860px;
     }
 
     .hero p{
       margin-top:14px;
-      max-width:66ch;
-      color:#51404a;
-      font-size:15px;
+      max-width:860px;
+      font-size:16px;
+      color:var(--muted);
     }
 
     .view-toggle-wrap{
-      width:min(var(--max), calc(100% - 32px));
-      margin:12px auto 4px;
-      display:flex;
-      justify-content:flex-end;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px 10px;
     }
 
     .view-toggle{
       display:inline-flex;
-      gap:8px;
+      gap:6px;
       background:#fff;
-      border:1px solid #e8dde7;
+      border:1px solid var(--border);
       border-radius:999px;
       padding:6px;
-      box-shadow:0 10px 22px rgba(30,24,38,.08);
+      box-shadow:var(--card-shadow);
     }
 
     .view-btn{
       border:none;
       background:transparent;
-      color:#6c5a65;
-      font-size:13px;
-      font-weight:700;
+      color:var(--muted);
+      font-weight:900;
+      font-size:14px;
+      padding:10px 16px;
       border-radius:999px;
-      padding:7px 14px;
       cursor:pointer;
-      transition:all .18s ease;
+      transition:.2s ease;
     }
 
     .view-btn.active{
-      background:linear-gradient(135deg,#ff5f6d,#ff7e5f);
+      background:var(--ink);
       color:#fff;
-      box-shadow:0 8px 16px rgba(255,111,123,.33);
     }
 
     .layout{
-      width:min(var(--max), calc(100% - 32px));
-      margin:10px auto 38px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:12px 20px 80px;
       display:grid;
-      grid-template-columns:minmax(260px,300px) minmax(0,1fr);
-      gap:18px;
+      grid-template-columns:320px minmax(0,1fr);
+      gap:24px;
       align-items:start;
     }
 
-    .layout.with-map{
-      grid-template-columns:minmax(240px,280px) minmax(0,1fr) minmax(320px,36%);
+    .layout.map-mode{
+      max-width:none;
+      width:100%;
+      padding:12px 20px 80px;
+      grid-template-columns:320px minmax(0, 1.15fr) minmax(420px, .95fr);
+      gap:20px;
+      align-items:start;
     }
+
+    .filters{position:sticky;top:92px}
+    .map-mode .filters{top:92px}
 
     .panel{
       background:var(--paper);
       border:1px solid var(--border);
-      border-radius:var(--radius-lg);
+      border-radius:var(--radius-xl);
       box-shadow:var(--card-shadow);
     }
 
-    .filter-panel{
-      padding:20px 18px;
-      position:sticky;
-      top:92px;
-      max-height:calc(100vh - 116px);
-      overflow:auto;
-      scrollbar-width:thin;
-      scrollbar-color:#e2d5df transparent;
-    }
-
-    .filter-panel::-webkit-scrollbar{width:8px}
-
-    .filter-panel::-webkit-scrollbar-thumb{
-      background:#e7dce5;
-      border-radius:999px;
-    }
+    .filter-panel{padding:20px}
 
     .panel-title-row{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      margin-bottom:14px;
-      gap:12px;
+      align-items:center;
+      gap:16px;
+      margin-bottom:16px;
     }
 
     .panel-title{
-      font-size:16px;
-      font-weight:800;
-      letter-spacing:.01em;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.01em;
     }
 
     .reset-btn{
       border:none;
-      background:#f4edf2;
-      color:#644e5c;
-      border-radius:999px;
-      padding:6px 12px;
-      font-size:12px;
+      background:transparent;
+      color:var(--blue);
+      font-weight:800;
       cursor:pointer;
-      transition:all .18s ease;
+      padding:4px 0;
     }
 
-    .reset-btn:hover{
-      background:#efe3eb;
-      transform:translateY(-1px);
-    }
-
-    .field{margin-bottom:14px}
+    .field{margin-bottom:16px}
+    .field:last-child{margin-bottom:0}
 
     .label{
       display:block;
-      font-size:12px;
-      font-weight:700;
-      color:#7a6872;
-      margin-bottom:7px;
+      font-size:13px;
+      font-weight:800;
+      color:#4c404c;
+      margin-bottom:8px;
     }
 
     .input,.select{
       width:100%;
-      border:1px solid #dcd2d8;
-      border-radius:11px;
+      border:1px solid var(--border);
+      border-radius:14px;
       background:#fff;
       color:var(--ink);
-      padding:10px 11px;
-      font-size:13px;
-      transition:border-color .18s ease, box-shadow .18s ease;
+      padding:13px 14px;
+      outline:none;
+      transition:.2s ease;
     }
 
     .input:focus,.select:focus{
-      outline:none;
-      border-color:#f28aa2;
-      box-shadow:0 0 0 4px rgba(242,138,162,.15);
+      border-color:#d3c6f7;
+      box-shadow:0 0 0 4px rgba(124,58,237,.08);
     }
 
-    .content{
-      display:grid;
-      gap:14px;
-      min-width:0;
+    .select:disabled{
+      background:#f6f2ee;
+      color:#9b8f99;
+      cursor:not-allowed;
     }
 
     .toolbar{
       display:flex;
-      align-items:flex-end;
       justify-content:space-between;
+      align-items:flex-end;
       gap:16px;
       flex-wrap:wrap;
+      margin-bottom:18px;
     }
 
     .results-title{
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:.01em;
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-.02em;
+      line-height:1.15;
     }
 
     .results-sub{
-      margin-top:2px;
-      font-size:13px;
+      margin-top:6px;
       color:var(--muted);
+      font-size:14px;
     }
 
     .chips{
@@ -565,229 +522,285 @@
     }
 
     .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
       background:#fff;
-      border:1px solid #eadde6;
       border-radius:999px;
-      padding:6px 10px;
-      font-size:12px;
-      color:#6d5561;
-      white-space:nowrap;
+      padding:9px 12px;
+      font-size:13px;
+      font-weight:800;
+      color:#4e424e;
     }
 
-    .status-box{
-      padding:14px 16px;
-      border-radius:12px;
-      background:#fff6fb;
-      border:1px dashed #ebcad9;
-      color:#7b5567;
-      font-size:13px;
+    .status-box,.empty-box{
+      padding:22px;
+      border-radius:24px;
+      border:1px dashed #d8ccc7;
+      background:#fffdfa;
+      color:var(--muted);
+      margin-bottom:18px;
+    }
+
+    .content{
+      min-width:0;
     }
 
     .cards{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .layout.map-mode .cards{
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:14px;
+      max-height:calc(100vh - 210px);
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .layout.map-mode .card-body{
+      padding:16px;
+      gap:12px;
+    }
+
+    .layout.map-mode .card-title{
+      font-size:20px;
+    }
+
+    .layout.map-mode .meta-item{
+      grid-template-columns:78px minmax(0,1fr);
+      gap:8px;
+      font-size:13px;
+    }
+
+    .layout.map-mode .btn{
+      padding:10px 12px;
+      font-size:13px;
+    }
+
+    .layout.map-mode .toolbar{
+      margin-bottom:14px;
     }
 
     .card{
-      background:var(--paper);
-      border:1px solid #eee3ea;
-      border-radius:18px;
-      padding:14px;
-      box-shadow:0 12px 26px rgba(25,16,24,.06);
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:26px;
+      box-shadow:var(--card-shadow);
+      overflow:hidden;
       display:flex;
       flex-direction:column;
-      gap:10px;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      cursor:pointer;
+      min-width:0;
+      transition:.18s ease;
     }
 
     .card:hover{
       transform:translateY(-2px);
-      box-shadow:0 16px 30px rgba(25,16,24,.11);
-      border-color:#f3cedd;
     }
 
-    .card.active{
-      border-color:#f07f9e;
-      box-shadow:0 0 0 3px rgba(240,127,158,.18),0 16px 30px rgba(25,16,24,.11);
+    .card.active-map-item{
+      border-color:var(--blue);
+      box-shadow:0 0 0 3px rgba(47,109,245,.14), var(--card-shadow);
     }
 
-    .card-head{
+    .card-body{
+      padding:18px;
       display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
+      flex-direction:column;
+      gap:14px;
+      flex:1;
+      min-width:0;
     }
 
     .card-title{
-      font-size:16px;
-      line-height:1.35;
-      font-weight:800;
-      margin:0;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-.02em;
+      line-height:1.12;
+      word-break:break-word;
     }
 
-    .category-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      background:linear-gradient(135deg,#fff8d8,#fff3b0);
-      border:1px solid #f0dd87;
-      color:#7a5b00;
-      border-radius:999px;
-      padding:4px 9px;
-      font-size:12px;
-      font-weight:700;
-      white-space:nowrap;
+    .card-subtitle{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:14px;
+      word-break:break-word;
     }
 
-    .meta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
+    .meta-list{display:grid;gap:10px}
+
+    .meta-item{
+      display:grid;
+      grid-template-columns:92px minmax(0,1fr);
+      gap:10px;
+      align-items:start;
+      font-size:14px;
     }
 
-    .tag{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      background:#f3eef4;
-      border:1px solid #e7dbe6;
-      color:#6f5967;
-    }
+    .meta-label{font-weight:900;color:#433744}
+    .meta-value{color:#564a55;word-break:break-word}
 
-    .desc{
-      font-size:13px;
-      color:#4f4148;
-      min-height:42px;
-    }
-
-    .addr{
-      font-size:12px;
-      color:#756471;
-      line-height:1.45;
-    }
-
-    .links{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
+    .link-row{
       margin-top:auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
 
-    .btn-link{
+    .btn{
       display:inline-flex;
-      align-items:center;
       justify-content:center;
-      gap:6px;
-      border-radius:10px;
-      border:1px solid #e7dbe4;
-      background:#fff;
-      padding:7px 10px;
-      font-size:12px;
-      font-weight:700;
-      color:#5d4956;
-      transition:all .18s ease;
+      align-items:center;
+      gap:8px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:14px;
+      transition:.2s ease;
+      border:1px solid transparent;
     }
 
-    .btn-link:hover{
-      border-color:#f0adc4;
-      background:#fff5f8;
-      color:#d54975;
+    .btn-primary{background:var(--ink);color:#fff}
+
+    .btn-primary:hover{
       transform:translateY(-1px);
+      box-shadow:0 10px 22px rgba(26,16,20,.14);
     }
 
-    .map-panel{display:none}
-    .layout.with-map .map-panel{display:block}
+    .btn-secondary{
+      background:#fff;
+      border-color:var(--border);
+      color:#433744;
+    }
 
-    .map-shell{
+    .map-panel{
+      opacity:0;
+      pointer-events:none;
+      min-width:0;
       position:sticky;
       top:92px;
-      height:var(--map-height);
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid #e6dbe4;
-      box-shadow:0 16px 30px rgba(24,20,29,.08);
+      visibility:hidden;
+    }
+
+    .layout.map-mode .map-panel{
+      display:block;
+      opacity:1;
+      pointer-events:auto;
+      visibility:visible;
+    }
+
+    .map-shell{
       background:#fff;
+      border:1px solid var(--border);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:var(--card-shadow);
+      height:var(--map-height);
     }
 
     #map{
       width:100%;
       height:100%;
+      min-height:500px;
     }
 
-    .leaflet-popup-content{
-      margin:10px 12px;
+    #map .leaflet-tile{
+      filter:contrast(1.08) saturate(1.12) brightness(.96);
+    }
+
+    .leaflet-popup-content-wrapper{
+      border-radius:18px;
+    }
+
+    .map-popup{
+      min-width:220px;
+    }
+
+    .map-popup-title{
+      font-weight:900;
+      font-size:15px;
+      line-height:1.35;
+      margin-bottom:6px;
+    }
+
+    .map-popup-sub{
       font-size:12px;
-      line-height:1.45;
-      color:#40333a;
+      color:var(--muted);
+      margin-bottom:8px;
     }
 
-    .map-card-link{
-      display:inline-block;
-      margin-top:6px;
-      font-weight:700;
-      color:#d54871;
-      text-decoration:none;
+    .map-popup-line{
+      font-size:13px;
+      margin-bottom:6px;
+      color:#4b404a;
+    }
+
+    .map-popup-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .map-popup-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#433744;
     }
 
     .page-footer{
-      width:min(var(--container), calc(100% - 32px));
-      margin:34px auto 30px;
-      padding:14px 20px 18px;
-      background:linear-gradient(135deg, rgba(248,250,252,.72) 0%, rgba(238,243,249,.68) 100%);
-      border:1px solid #e1e8f0;
-      border-radius:24px;
-      box-shadow:0 12px 24px rgba(19,35,58,.06);
-      backdrop-filter:blur(6px);
+      margin-top:24px;
+      border:1px solid #dce4ee;
+      border-radius:20px;
+      background:linear-gradient(135deg,#fbfdff,#f6f9fc);
+      box-shadow:0 16px 34px rgba(19,35,58,.10);
+      padding:24px;
     }
 
     .footer-inner{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:24px;
-      flex-wrap:nowrap;
+      gap:22px;
+      flex-wrap:wrap;
     }
 
     .footer-left{
       display:flex;
-      align-items:center;
-      gap:12px;
-      flex:0 1 auto;
-      min-width:0;
-      padding-left:0;
-    }
-
-    .footer-copy{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+      gap:16px;
+      align-items:flex-start;
+      min-width:280px;
     }
 
     .footer-logo{
-      display:block;
-      width:auto;
-      height:68px;
-      max-width:none;
+      width:112px;
+      height:112px;
       object-fit:contain;
+      border-radius:14px;
       background:transparent;
       border:none;
       box-shadow:none;
-      border-radius:0;
-      flex-shrink:0;
     }
 
     .footer-title{
       font-size:14px;
       font-weight:800;
-      color:var(--text);
+      letter-spacing:.08em;
     }
 
-    .footer-sub,
-    .footer-meta{
-      font-size:12px;
+    .footer-sub,.footer-meta{
       color:var(--muted);
+      font-size:13px;
     }
 
     .footer-links{
@@ -806,94 +819,84 @@
     }
 
     .footer-links a{
-      font-size:12px;
-      color:#34414d;
       text-decoration:none;
-      padding:6px 10px;
+      font-size:13px;
+      color:#3f4d5a;
+      border:1px solid #dce4ee;
+      background:#fff;
       border-radius:999px;
-      background:rgba(255,255,255,.72);
-      border:1px solid #e2e8f0;
-      transition:all .18s ease;
+      padding:8px 12px;
     }
 
-    .footer-links a:hover{
-      color:var(--brand);
-      border-color:var(--hover-pink);
-      background:var(--hover-pink-bg);
-      transform:translateY(-1px);
-    }
-
-    @media (max-width:1180px){
-      .layout,.layout.with-map{
-        grid-template-columns:minmax(250px,280px) minmax(0,1fr);
+    @media (max-width:1240px){
+      .layout.map-mode{
+        grid-template-columns:290px minmax(0, 1.1fr) minmax(360px, .9fr);
       }
-      .map-panel{display:none!important}
-    }
-
-    @media (max-width:900px){
-      .header-inner{
-        flex-direction:column;
-        align-items:stretch;
-        gap:10px;
-        padding:10px 0 12px;
-      }
-
-      .header-actions{justify-content:flex-start}
-      .header-search{width:100%}
-      .search-box{flex:1;min-width:0}
-
-      .layout,.layout.with-map{
+      .layout.map-mode .cards{
         grid-template-columns:1fr;
       }
+    }
 
-      .filter-panel{
-        position:relative;
-        top:0;
+    @media (max-width:1040px){
+      .layout{grid-template-columns:1fr}
+      .layout.map-mode{
+        grid-template-columns:1fr;
+      }
+      .filters{position:static}
+      .map-panel{position:static}
+      .map-shell{height:420px}
+      .cards{grid-template-columns:1fr 1fr}
+      .layout.map-mode .cards{
         max-height:none;
-      }
-
-      .view-toggle-wrap{justify-content:flex-start}
-      .cards{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
-
-      .footer-inner{
-        flex-wrap:wrap;
-        align-items:flex-start;
-      }
-
-      .footer-left,
-      .footer-links{
-        width:100%;
-      }
-
-      .footer-links{
-        justify-content:flex-start;
+        overflow:visible;
       }
     }
 
-    @media (max-width:560px){
-      body{
-        background:
-          linear-gradient(rgba(247,248,250,.96), rgba(247,248,250,.98)),
-          url("../../assets/images/brand/site-bg.jpg") center top / cover no-repeat,
-          var(--bg);
+    @media (max-width:780px){
+      .header-inner{
+        min-height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-direction:column;
       }
-
-      .container,.layout,.view-toggle-wrap,.page-footer{
-        width:calc(100% - 20px);
+      .header-actions{
+        width:100%;
+        justify-content:flex-start;
       }
-
-      .hero{padding-inline:10px}
-      .hero-box{border-radius:20px}
-
-      .header-city,
-      .header-category,
-      .header-language{
-        padding:7px 10px;
-        font-size:12px;
+      .header-search{
+        width:100%;
       }
-
-      .search-box input{min-width:110px}
-      .cards{grid-template-columns:1fr}
+      .header-search .search-box{
+        flex:1 1 auto;
+      }
+      .header-actions .header-category,
+      .header-actions .header-language{
+        width:max-content;
+      }
+      .header-nav{
+        width:100%;
+        justify-content:flex-start;
+      }
+      .hero-box{
+        padding:26px 20px 22px;
+      }
+      .cards{
+        grid-template-columns:1fr;
+      }
+      .meta-item{
+        grid-template-columns:1fr;
+        gap:3px;
+      }
+      .view-toggle-wrap{
+        padding-bottom:14px;
+      }
+      .view-toggle{
+        width:100%;
+      }
+      .view-btn{
+        flex:1 1 0;
+        text-align:center;
+      }
     }
   </style>
 
@@ -904,10 +907,7 @@
 
       var localeIndex = -1;
       for (var i = 0; i < segments.length; i++) {
-        if (segments[i] === 'ja' || segments[i] === 'de') {
-          localeIndex = i;
-          break;
-        }
+        if (segments[i] === 'ja' || segments[i] === 'de') { localeIndex = i; break; }
       }
 
       var depth = localeIndex >= 0 ? (segments.length - localeIndex) : Math.max(segments.length - 1, 0);
@@ -929,7 +929,7 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../" aria-label="Nihon Gateway Germany ホーム">
+      <a class="brand" href="/nihon-gateway-germany/ja/" aria-label="Nihon Gateway Germany ホーム">
         <img class="brand-logo" src="../../assets/images/brand/logo_header.png" alt="Nihon Gateway Germany ヘッダーロゴ">
         <span class="brand-copy">
           <span class="brand-title">NIHON GATEWAY GERMANY</span>
@@ -939,27 +939,27 @@
 
       <div class="header-actions">
         <nav class="header-nav" aria-label="メインナビゲーション">
-          <a href="../">ホーム</a>
-          <a href="../about/">このサイトについて</a>
+          <a href="/nihon-gateway-germany/ja/" class="active">ホーム</a>
+          <a href="/nihon-gateway-germany/ja/about/">このサイトについて</a>
         </nav>
 
         <div class="header-category header-category-menu" aria-label="カテゴリ選択">
           <button type="button" class="header-category-trigger">カテゴリ</button>
           <div class="category-dropdown">
-            <a href="../guides/">手続き・制度</a>
-            <a href="../living/">住まい・生活</a>
-            <a href="../jobs/" data-base="jobs">仕事・求人</a>
-            <a href="../medical/" data-base="medical">医療・緊急</a>
-            <a href="../eat/" data-base="eat">グルメ・飲食</a>
-            <a href="../shopping/" data-base="shopping">買い物・サービス</a>
-            <a href="../community/" data-base="community">交流・掲示板</a>
-            <a href="../events/" data-base="events">おでかけ・イベント</a>
-            <a href="../learn-german/">ドイツ語・学び</a>
-            <a href="../news/">ニュース・読みもの</a>
+            <a href="/nihon-gateway-germany/ja/guides/">手続き・制度</a>
+            <a href="/nihon-gateway-germany/ja/living/">住まい・生活</a>
+            <a href="/nihon-gateway-germany/ja/jobs/">仕事・求人</a>
+            <a href="/nihon-gateway-germany/ja/medical/">医療・緊急</a>
+            <a href="/nihon-gateway-germany/ja/eat/">食べる</a>
+            <a href="/nihon-gateway-germany/ja/shopping/">買い物・サービス</a>
+            <a href="/nihon-gateway-germany/ja/community/">交流・掲示板</a>
+            <a href="/nihon-gateway-germany/ja/events/">おでかけ・イベント</a>
+            <a href="/nihon-gateway-germany/ja/learn-german/">ドイツ語・学び</a>
+            <a href="/nihon-gateway-germany/ja/news/">ニュース・読みもの</a>
           </div>
         </div>
 
-        <form class="header-search" action="../search/" method="get" role="search">
+        <form class="header-search" action="/nihon-gateway-germany/ja/search/" method="get" role="search">
           <label class="search-box" aria-label="サイト内検索">
             <span>⌕</span>
             <input type="search" name="q" placeholder="検索">
@@ -970,11 +970,9 @@
         <label class="header-language" aria-label="言語切り替え">
           <span>Language</span>
           <select id="languageSelect">
-            <option value="../" selected>日本語</option>
-            <option value="../../">English</option>
-            <option value="../../de/">Deutsch</option>
-            <option value="../../zh/">中文</option>
-            <option value="../../ko/">한국어</option>
+            <option value="/nihon-gateway-germany/ja/">日本語</option>
+            <option value="/nihon-gateway-germany/">English</option>
+            <option value="/nihon-gateway-germany/de/">Deutsch</option>
           </select>
         </label>
       </div>
@@ -984,10 +982,9 @@
   <section class="hero">
     <div class="hero-box">
       <div class="eyebrow"><span class="eyebrow-dot"></span>医療・病院ガイド</div>
-      <h1>受診先探しを<br>もっと分かりやすく</h1>
+      <h1>受診先が見つかる<br>医療機関探しをもっと便利に</h1>
       <p>
-        デュッセルドルフ周辺の病院、クリニック、家庭医をカテゴリやエリアから探せます。
-        住所、公式サイト、地図リンクをまとめて確認できます。
+        病院、クリニック、家庭医をカテゴリやエリアから検索。住所、公式サイト、地図リンクをひと目で確認できます。
       </p>
     </div>
   </section>
@@ -1009,14 +1006,17 @@
 
         <div class="field">
           <label class="label" for="keywordInput">キーワードで検索</label>
-          <input id="keywordInput" class="input" type="text" placeholder="病院名・診療内容・エリアなど" />
+          <input id="keywordInput" class="input" type="text" placeholder="病院名・説明・タグ・住所など" />
         </div>
 
         <div class="field">
           <label class="label" for="citySelect">都市</label>
           <select id="citySelect" class="select">
             <option value="">すべて</option>
-            <option value="duesseldorf">Düsseldorf</option>
+            <option value="duesseldorf">デュッセルドルフ</option>
+            <option value="frankfurt">フランクフルト</option>
+            <option value="muenchen">ミュンヘン</option>
+            <option value="berlin">ベルリン</option>
           </select>
         </div>
 
@@ -1028,9 +1028,9 @@
         </div>
 
         <div class="field">
-          <label class="label" for="category2Select">エリア</label>
-          <select id="category2Select" class="select" disabled>
-            <option value="">まずカテゴリを選択</option>
+          <label class="label" for="areaSelect">エリア</label>
+          <select id="areaSelect" class="select">
+            <option value="">すべて</option>
           </select>
         </div>
       </div>
@@ -1038,9 +1038,9 @@
 
     <section class="content">
       <div class="toolbar">
-        <div class="results-meta">
+        <div>
           <h2 class="results-title">医療リソース</h2>
-          <div class="results-sub" id="resultsSummary">読み込み中...</div>
+          <p class="results-sub" id="resultsSummary">読み込み中...</p>
         </div>
         <div class="chips" id="activeChips"></div>
       </div>
@@ -1049,7 +1049,7 @@
       <div id="cards" class="cards" aria-live="polite"></div>
     </section>
 
-    <aside class="map-panel" id="mapPanel" aria-label="地図表示エリア">
+    <aside class="map-panel" id="mapPanel" aria-label="地図表示">
       <div class="map-shell">
         <div id="map"></div>
       </div>
@@ -1060,7 +1060,7 @@
     <div class="footer-inner">
       <div class="footer-left">
         <img class="footer-logo" src="../../assets/images/brand/logo_footer.png" alt="Nihon Gateway Germany フッターロゴ">
-        <div class="footer-copy">
+        <div>
           <div class="footer-title">NIHON GATEWAY GERMANY</div>
           <div class="footer-sub">ドイツと日本をつなぐ総合ポータル</div>
           <div class="footer-meta">© 2026 Nihon Gateway Germany</div>
@@ -1068,11 +1068,11 @@
       </div>
 
       <div class="footer-links">
-        <a href="../about/">このサイトについて</a>
-        <a href="../contact/">お問い合わせ</a>
-        <a href="../terms/">利用規約</a>
-        <a href="../privacy/">プライバシー</a>
-        <a href="../impressum/">運営者情報</a>
+        <a href="/nihon-gateway-germany/ja/about/">このサイトについて</a>
+        <a href="/nihon-gateway-germany/ja/contact/">お問い合わせ</a>
+        <a href="/nihon-gateway-germany/ja/terms/">利用規約</a>
+        <a href="/nihon-gateway-germany/ja/privacy/">プライバシー</a>
+        <a href="/nihon-gateway-germany/ja/impressum/">運営者情報</a>
       </div>
     </div>
   </footer>
@@ -1085,14 +1085,6 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzpVvPrboEPZaFQHf87Q1LPhiU40J03ntX1JicNoA4NOo6ngNWh8knFwJ_9IVkKgTKx/exec?sheet=medical&city=duesseldorf";
-
-    const languageSelect = document.getElementById("languageSelect");
-    if (languageSelect) {
-      languageSelect.addEventListener("change", (event) => {
-        const target = event.target.value;
-        if (target) window.location.href = target;
-      });
-    }
 
     const CATEGORY_LABELS = {
       hospital: "病院",
@@ -1123,10 +1115,11 @@
     };
 
     const els = {
+      languageSelect: document.getElementById("languageSelect"),
       keywordInput: document.getElementById("keywordInput"),
       citySelect: document.getElementById("citySelect"),
       category1Select: document.getElementById("category1Select"),
-      category2Select: document.getElementById("category2Select"),
+      areaSelect: document.getElementById("areaSelect"),
       resetFiltersBtn: document.getElementById("resetFiltersBtn"),
       resultsSummary: document.getElementById("resultsSummary"),
       activeChips: document.getElementById("activeChips"),
@@ -1134,26 +1127,19 @@
       cards: document.getElementById("cards"),
       mainLayout: document.getElementById("mainLayout"),
       cardViewBtn: document.getElementById("cardViewBtn"),
-      mapViewBtn: document.getElementById("mapViewBtn"),
-      mapPanel: document.getElementById("mapPanel")
+      mapViewBtn: document.getElementById("mapViewBtn")
     };
 
     let rawItems = [];
     let filteredItems = [];
-    let categoryMap = {};
-    let currentView = "card";
-
     let map = null;
     let markerLayer = null;
     let markerMap = new Map();
     let geocodeCache = new Map();
-    let activeItemId = null;
-    let mapInitialized = false;
-    let geocodeRunToken = 0;
+    let activeId = null;
 
     function escapeHtml(value) {
-      return (value ?? "")
-        .toString()
+      return String(value ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -1161,18 +1147,10 @@
         .replace(/'/g, "&#039;");
     }
 
-    function toNumber(value) {
-      if (value === null || value === undefined || value === "") return null;
-      const n = parseFloat(String(value).replace(/[^\d.-]/g, ""));
-      return Number.isFinite(n) ? n : null;
-    }
-
-    function normalizeText(str) {
-      if (!str) return "";
-      return String(str)
-        .toLowerCase()
+    function normalizeText(value) {
+      return String(value ?? "")
         .normalize("NFKC")
-        .replace(/\s+/g, " ")
+        .toLowerCase()
         .trim();
     }
 
@@ -1184,151 +1162,75 @@
       return TAG_LABELS[value] || value;
     }
 
-    function parseItem(item, index) {
-      const id =
-        item.slug ||
-        item.id ||
-        item.ID ||
-        `${normalizeText(item.name_ja || item.name_en || "item")}-${index}`;
-
-      const name =
-        item.name_ja ||
-        item.name_en ||
-        item.name ||
-        "名称未設定";
-
-      const nameEn =
-        item.name_en ||
-        "";
-
-      const description =
-        item.description_ja ||
-        item.description_en ||
-        item.description ||
-        "";
-
-      const descriptionEn =
-        item.description_en ||
-        "";
-
-      const city =
-        item.city || "";
-
-      const categoryValue =
-        item.category || "その他";
-
-      const category1 =
-        categoryLabel(categoryValue);
-
-      const categoryRaw =
-        categoryValue;
-
-      const category2 =
-        item.area || "";
-
-      const address =
-        item.address || "";
-
-      const postcode =
-        item.postcode || "";
-
-      const googleMapsUrl =
-        item.map_url ||
-        item.google_maps_url ||
-        item.googleMapsUrl ||
-        "";
-
-      const website =
-        item.website ||
-        item.website_url ||
-        "";
-
-      const reviewCount =
-        toNumber(item.review_count || item.reviews || item.priority) ?? 0;
-
-      const starRating =
-        toNumber(item.rating || item.star_rating || item.stars);
-
-      const lat =
-        toNumber(item.lat || item.latitude || item["緯度"]) ?? null;
-
-      const lng =
-        toNumber(item.lng || item.longitude || item["経度"]) ?? null;
-
-      const tagsRaw =
-        item.tags ||
-        item.tag ||
-        item.labels ||
-        "";
-
-      const tags = Array.isArray(tagsRaw)
-        ? tagsRaw.map((t) => String(t).trim()).filter(Boolean)
-        : String(tagsRaw)
-            .split(/[、,]/)
-            .map((t) => t.trim())
-            .filter(Boolean);
-
-      return {
-        id,
-        name,
-        nameEn,
-        description,
-        descriptionEn,
-        city,
-        category1,
-        categoryRaw,
-        category2,
-        address,
-        postcode,
-        googleMapsUrl,
-        website,
-        reviewCount,
-        starRating,
-        lat,
-        lng,
-        tags,
-        status: item.status || "published",
-        sourceType: item.source_type || ""
-      };
+    function parseTags(value) {
+      if (Array.isArray(value)) return value.map(v => String(v).trim()).filter(Boolean);
+      return String(value || "")
+        .split(/[、,]/)
+        .map(v => v.trim())
+        .filter(Boolean);
     }
 
-    async function fetchJson(url) {
-      const res = await fetch(url, { method: "GET" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
-    }
-
-    function normalizeIncomingPayload(payload) {
+    function normalizePayload(payload) {
       if (!payload) return [];
       if (Array.isArray(payload)) return payload;
-      if (Array.isArray(payload.items)) return payload.items;
       if (Array.isArray(payload.data)) return payload.data;
+      if (Array.isArray(payload.items)) return payload.items;
       if (Array.isArray(payload.results)) return payload.results;
       return [];
     }
 
-    function buildCategoryMap(items) {
-      const result = {};
-      for (const it of items) {
-        const c1 = it.category1 || "その他";
-        const c2 = it.category2 || "";
-        if (!result[c1]) result[c1] = new Set();
-        if (c2) result[c1].add(c2);
-      }
+    function parseItem(item, index) {
+      const categoryRaw = item.category || "";
+      const tags = parseTags(item.tags);
 
-      Object.keys(result).forEach((k) => {
-        result[k] = Array.from(result[k]).sort((a, b) => a.localeCompare(b, "ja"));
-      });
-
-      return result;
+      return {
+        id: item.slug || item.id || `medical-${index}`,
+        name: item.name_ja || item.name_en || "名称未設定",
+        nameEn: item.name_en || "",
+        description: item.description_ja || item.description_en || "",
+        descriptionEn: item.description_en || "",
+        categoryRaw,
+        category: categoryLabel(categoryRaw),
+        city: item.city || "",
+        area: item.area || "",
+        tags,
+        address: item.address || "",
+        postcode: item.postcode || "",
+        website: item.website || "",
+        mapUrl: item.map_url || "",
+        lat: item.lat ? Number(item.lat) : null,
+        lng: item.lng ? Number(item.lng) : null
+      };
     }
 
-    function setStatus(text, isError = false) {
+    function mapUrlFor(item) {
+      if (item.mapUrl) return item.mapUrl;
+      if (item.address) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
+      return "";
+    }
+
+    function itemSearchText(item) {
+      return normalizeText([
+        item.name,
+        item.nameEn,
+        item.description,
+        item.descriptionEn,
+        item.category,
+        item.categoryRaw,
+        item.city,
+        item.area,
+        item.address,
+        item.postcode,
+        ...item.tags,
+        ...item.tags.map(tagLabel)
+      ].join(" "));
+    }
+
+    function setStatus(message, isError = false) {
       els.statusBox.style.display = "block";
-      els.statusBox.style.background = isError ? "#fff2f2" : "#fff6fb";
-      els.statusBox.style.borderColor = isError ? "#f3b8b8" : "#ebcad9";
-      els.statusBox.style.color = isError ? "#9f3c3c" : "#7b5567";
-      els.statusBox.innerHTML = text;
+      els.statusBox.style.borderColor = isError ? "#f2b8b8" : "#d8ccc7";
+      els.statusBox.style.color = isError ? "#9f3c3c" : "var(--muted)";
+      els.statusBox.innerHTML = message;
     }
 
     function clearStatus() {
@@ -1336,182 +1238,151 @@
       els.statusBox.innerHTML = "";
     }
 
-    function updateCategory1Options() {
-      const prev = els.category1Select.value;
-      const keys = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b, "ja"));
+    function populateFilters() {
+      const categories = Array.from(new Set(rawItems.map(i => i.category).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ja"));
+      const areas = Array.from(new Set(rawItems.map(i => i.area).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ja"));
 
       els.category1Select.innerHTML =
-        `<option value="">すべて</option>` +
-        keys.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join("");
+        '<option value="">すべて</option>' +
+        categories.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
 
-      if (keys.includes(prev)) els.category1Select.value = prev;
-      updateCategory2Options();
+      els.areaSelect.innerHTML =
+        '<option value="">すべて</option>' +
+        areas.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
     }
 
-    function updateCategory2Options() {
-      const c1 = els.category1Select.value;
-      const options = c1 ? categoryMap[c1] || [] : [];
-      const prev = els.category2Select.value;
-
-      els.category2Select.disabled = !c1;
-
-      if (!c1) {
-        els.category2Select.innerHTML = `<option value="">まずカテゴリを選択</option>`;
-        return;
-      }
-
-      els.category2Select.innerHTML =
-        `<option value="">すべて</option>` +
-        options.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join("");
-
-      if (options.includes(prev)) els.category2Select.value = prev;
-    }
-
-    function getActiveFilters() {
+    function activeFilters() {
       return {
         keyword: normalizeText(els.keywordInput.value),
         city: normalizeText(els.citySelect.value),
-        category1: els.category1Select.value,
-        category2: els.category2Select.value
+        category: els.category1Select.value,
+        area: els.areaSelect.value
       };
     }
 
-    function itemTextForSearch(it) {
-      return normalizeText([
-        it.name,
-        it.nameEn,
-        it.description,
-        it.descriptionEn,
-        it.address,
-        it.postcode,
-        it.city,
-        it.category1,
-        it.categoryRaw,
-        it.category2,
-        ...(it.tags || []),
-        ...(it.tags || []).map(tagLabel)
-      ].join(" "));
-    }
-
     function applyFilters() {
-      const f = getActiveFilters();
+      const f = activeFilters();
 
-      filteredItems = rawItems.filter((it) => {
-        if (f.city && normalizeText(it.city) !== f.city) return false;
-        if (f.category1 && it.category1 !== f.category1) return false;
-        if (f.category2 && it.category2 !== f.category2) return false;
-
-        if (f.keyword) {
-          const hay = itemTextForSearch(it);
-          if (!hay.includes(f.keyword)) return false;
-        }
-
+      filteredItems = rawItems.filter(item => {
+        if (f.city && normalizeText(item.city) !== f.city) return false;
+        if (f.category && item.category !== f.category) return false;
+        if (f.area && item.area !== f.area) return false;
+        if (f.keyword && !itemSearchText(item).includes(f.keyword)) return false;
         return true;
       });
 
-      filteredItems.sort((a, b) => {
-        const categoryCompare = String(a.category1).localeCompare(String(b.category1), "ja");
-        if (categoryCompare !== 0) return categoryCompare;
-        return String(a.name).localeCompare(String(b.name), "ja");
+      filteredItems.sort((a,b) => {
+        const c = a.category.localeCompare(b.category, "ja");
+        if (c !== 0) return c;
+        return a.name.localeCompare(b.name, "ja");
       });
 
-      renderActiveChips(f);
       renderSummary();
+      renderChips(f);
       renderCards();
 
-      if (currentView === "map") renderMapMarkers();
-    }
-
-    function renderActiveChips(f) {
-      const chips = [];
-
-      if (f.city) chips.push(`都市: ${f.city}`);
-      if (f.category1) chips.push(`カテゴリ: ${f.category1}`);
-      if (f.category2) chips.push(`エリア: ${f.category2}`);
-      if (f.keyword) chips.push(`検索: ${f.keyword}`);
-
-      els.activeChips.innerHTML = chips
-        .map((c) => `<span class="chip">${escapeHtml(c)}</span>`)
-        .join("");
+      if (els.mainLayout.classList.contains("map-mode")) {
+        renderMarkers();
+      }
     }
 
     function renderSummary() {
-      const total = rawItems.length;
-      const visible = filteredItems.length;
-      els.resultsSummary.textContent = `${visible} 件 / 全 ${total} 件`;
+      els.resultsSummary.textContent = `${filteredItems.length} 件 / 全 ${rawItems.length} 件`;
     }
 
-    function createMapUrlFromAddress(address) {
-      if (!address) return "";
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-    }
+    function renderChips(f) {
+      const chips = [];
+      if (f.keyword) chips.push(`検索: ${f.keyword}`);
+      if (f.city) chips.push(`都市: ${f.city}`);
+      if (f.category) chips.push(`カテゴリ: ${f.category}`);
+      if (f.area) chips.push(`エリア: ${f.area}`);
 
-    function createCard(it) {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.dataset.id = it.id;
-
-      const tagsHtml = [
-        it.category1 ? `<span class="tag">${escapeHtml(it.category1)}</span>` : "",
-        it.category2 ? `<span class="tag">${escapeHtml(it.category2)}</span>` : "",
-        ...(it.tags || []).slice(0, 4).map((t) => `<span class="tag">${escapeHtml(tagLabel(t))}</span>`)
-      ].join("");
-
-      const mapUrl = it.googleMapsUrl || createMapUrlFromAddress(it.address);
-
-      card.innerHTML = `
-        <div class="card-head">
-          <h3 class="card-title">${escapeHtml(it.name)}</h3>
-          <span class="category-pill">${escapeHtml(it.category1)}</span>
-        </div>
-        ${it.nameEn ? `<div class="addr">${escapeHtml(it.nameEn)}</div>` : ""}
-        <div class="meta-row">${tagsHtml}</div>
-        <p class="desc">${escapeHtml(it.description || "説明は準備中です。")}</p>
-        <p class="addr">${escapeHtml(it.address || "住所情報なし")}</p>
-        <div class="meta-row">
-          <span class="tag">都市 ${escapeHtml(it.city || "-")}</span>
-          ${it.postcode ? `<span class="tag">郵便番号 ${escapeHtml(it.postcode)}</span>` : ""}
-        </div>
-        <div class="links">
-          ${mapUrl ? `<a class="btn-link" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">地図</a>` : ""}
-          ${it.website ? `<a class="btn-link" href="${escapeHtml(it.website)}" target="_blank" rel="noopener">公式サイト</a>` : ""}
-        </div>
-      `;
-
-      card.addEventListener("click", (event) => {
-        if (event.target.closest("a")) return;
-        focusItemOnMap(it.id, true);
-      });
-
-      return card;
+      els.activeChips.innerHTML = chips
+        .map(v => `<span class="chip">${escapeHtml(v)}</span>`)
+        .join("");
     }
 
     function renderCards() {
       els.cards.innerHTML = "";
 
       if (!filteredItems.length) {
-        setStatus("条件に一致するデータがありません。フィルターを変更して再検索してください。");
+        setStatus("条件に一致する医療リソースがありません。フィルターを変更してください。");
         return;
       }
 
       clearStatus();
 
       const frag = document.createDocumentFragment();
-      filteredItems.forEach((it) => frag.appendChild(createCard(it)));
-      els.cards.appendChild(frag);
 
-      if (activeItemId) highlightActiveCard(activeItemId);
-    }
+      filteredItems.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "card";
+        if (item.id === activeId) card.classList.add("active-map-item");
+        card.dataset.id = item.id;
 
-    function highlightActiveCard(id) {
-      const cards = els.cards.querySelectorAll(".card");
-      cards.forEach((c) => {
-        c.classList.toggle("active", c.dataset.id === id);
+        const tagsText = item.tags
+          .slice(0, 3)
+          .map(tagLabel)
+          .join(" / ");
+
+        const mapUrl = mapUrlFor(item);
+
+        card.innerHTML = `
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">${escapeHtml(item.name)}</h3>
+              ${item.nameEn ? `<p class="card-subtitle">${escapeHtml(item.nameEn)}</p>` : ""}
+            </div>
+
+            <div class="meta-list">
+              <div class="meta-item">
+                <div class="meta-label">カテゴリ</div>
+                <div class="meta-value">${escapeHtml(item.category || "-")}</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">エリア</div>
+                <div class="meta-value">${escapeHtml(item.area || "-")}</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">説明</div>
+                <div class="meta-value">${escapeHtml(item.description || "-")}</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">住所</div>
+                <div class="meta-value">${escapeHtml(item.address || "-")}</div>
+              </div>
+              ${item.postcode ? `
+              <div class="meta-item">
+                <div class="meta-label">郵便番号</div>
+                <div class="meta-value">${escapeHtml(item.postcode)}</div>
+              </div>` : ""}
+              ${tagsText ? `
+              <div class="meta-item">
+                <div class="meta-label">タグ</div>
+                <div class="meta-value">${escapeHtml(tagsText)}</div>
+              </div>` : ""}
+            </div>
+
+            <div class="link-row">
+              ${mapUrl ? `<a class="btn btn-primary" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">地図を見る</a>` : ""}
+              ${item.website ? `<a class="btn btn-secondary" href="${escapeHtml(item.website)}" target="_blank" rel="noopener">公式サイト</a>` : ""}
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", event => {
+          if (event.target.closest("a")) return;
+          focusOnMap(item.id, true);
+        });
+
+        frag.appendChild(card);
       });
+
+      els.cards.appendChild(frag);
     }
 
     function ensureMap() {
-      if (mapInitialized) return;
+      if (map) return;
 
       map = L.map("map", { zoomControl: true });
 
@@ -1522,7 +1393,6 @@
 
       markerLayer = L.layerGroup().addTo(map);
       map.setView([51.2277, 6.7735], 12);
-      mapInitialized = true;
     }
 
     async function geocodeAddress(address) {
@@ -1530,20 +1400,14 @@
       if (!key) return null;
       if (geocodeCache.has(key)) return geocodeCache.get(key);
 
-      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(address)}`;
-
       try {
-        const res = await fetch(url, {
-          headers: { "Accept-Language": "ja,en;q=0.8" }
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
+        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(address)}`;
+        const res = await fetch(url, { headers: { "Accept-Language": "ja,en;q=0.8" } });
         const data = await res.json();
         const first = data && data[0];
 
         const value = first
-          ? { lat: parseFloat(first.lat), lng: parseFloat(first.lon) }
+          ? { lat: Number(first.lat), lng: Number(first.lon) }
           : null;
 
         geocodeCache.set(key, value);
@@ -1554,95 +1418,91 @@
       }
     }
 
-    function markerPopupHtml(it) {
-      const mapUrl = it.googleMapsUrl || createMapUrlFromAddress(it.address);
+    function popupHtml(item) {
+      const mapUrl = mapUrlFor(item);
 
       return `
-        <strong>${escapeHtml(it.name)}</strong><br>
-        ${it.nameEn ? `${escapeHtml(it.nameEn)}<br>` : ""}
-        ${escapeHtml(it.category1 || "")}${it.category2 ? ` / ${escapeHtml(it.category2)}` : ""}<br>
-        ${escapeHtml(it.address || "住所情報なし")}<br>
-        ${mapUrl ? `<a class="map-card-link" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">Googleマップを開く</a>` : ""}
+        <div class="map-popup">
+          <div class="map-popup-title">${escapeHtml(item.name)}</div>
+          ${item.nameEn ? `<div class="map-popup-sub">${escapeHtml(item.nameEn)}</div>` : ""}
+          <div class="map-popup-line">${escapeHtml(item.category)} / ${escapeHtml(item.area || "-")}</div>
+          <div class="map-popup-line">${escapeHtml(item.address || "-")}</div>
+          <div class="map-popup-actions">
+            ${mapUrl ? `<a class="map-popup-btn" href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener">地図</a>` : ""}
+            ${item.website ? `<a class="map-popup-btn" href="${escapeHtml(item.website)}" target="_blank" rel="noopener">公式</a>` : ""}
+          </div>
+        </div>
       `;
     }
 
-    async function renderMapMarkers() {
+    async function renderMarkers() {
       ensureMap();
       markerLayer.clearLayers();
       markerMap.clear();
 
-      if (!filteredItems.length) return;
-
-      const token = ++geocodeRunToken;
       const bounds = L.latLngBounds([]);
 
-      for (const it of filteredItems) {
-        let lat = it.lat;
-        let lng = it.lng;
+      for (const item of filteredItems) {
+        let lat = item.lat;
+        let lng = item.lng;
 
-        if ((lat === null || lng === null) && it.address) {
-          const geocoded = await geocodeAddress(it.address);
-
-          if (token !== geocodeRunToken) return;
-
-          if (geocoded) {
-            lat = geocoded.lat;
-            lng = geocoded.lng;
+        if ((!lat || !lng) && item.address) {
+          const geo = await geocodeAddress(item.address);
+          if (geo) {
+            lat = geo.lat;
+            lng = geo.lng;
           }
         }
 
-        if (lat === null || lng === null) continue;
+        if (!lat || !lng) continue;
 
-        const marker = L.marker([lat, lng]);
-        marker.bindPopup(markerPopupHtml(it));
-
+        const marker = L.marker([lat, lng]).addTo(markerLayer);
+        marker.bindPopup(popupHtml(item));
         marker.on("click", () => {
-          activeItemId = it.id;
-          highlightActiveCard(it.id);
+          activeId = item.id;
+          renderCards();
         });
 
-        marker.addTo(markerLayer);
-        markerMap.set(it.id, marker);
+        markerMap.set(item.id, marker);
         bounds.extend([lat, lng]);
       }
 
       if (bounds.isValid()) {
-        map.fitBounds(bounds.pad(0.18), { maxZoom: 15 });
+        map.fitBounds(bounds.pad(0.16), { maxZoom: 15 });
       }
     }
 
-    function focusItemOnMap(id, switchToMap = false) {
-      activeItemId = id;
-      highlightActiveCard(id);
+    function focusOnMap(id, switchToMap = false) {
+      activeId = id;
 
-      if (switchToMap && currentView !== "map") {
+      if (switchToMap && !els.mainLayout.classList.contains("map-mode")) {
         setView("map");
       }
 
+      renderCards();
+
       const marker = markerMap.get(id);
-      if (marker) {
+      if (marker && map) {
         marker.openPopup();
         map.panTo(marker.getLatLng(), { animate: true });
       }
     }
 
     function setView(view) {
-      currentView = view;
       const isMap = view === "map";
 
+      els.mainLayout.classList.toggle("map-mode", isMap);
       els.cardViewBtn.classList.toggle("active", !isMap);
       els.mapViewBtn.classList.toggle("active", isMap);
       els.cardViewBtn.setAttribute("aria-pressed", String(!isMap));
       els.mapViewBtn.setAttribute("aria-pressed", String(isMap));
 
-      els.mainLayout.classList.toggle("with-map", isMap);
-
       if (isMap) {
         ensureMap();
         setTimeout(() => {
           map.invalidateSize();
-          renderMapMarkers();
-        }, 50);
+          renderMarkers();
+        }, 80);
       }
     }
 
@@ -1650,38 +1510,24 @@
       els.keywordInput.value = "";
       els.citySelect.value = "";
       els.category1Select.value = "";
-      updateCategory2Options();
+      els.areaSelect.value = "";
       applyFilters();
     }
 
     function bindEvents() {
-      els.keywordInput.addEventListener("input", applyFilters);
-      els.citySelect.addEventListener("change", applyFilters);
-
-      els.category1Select.addEventListener("change", () => {
-        updateCategory2Options();
-        applyFilters();
-      });
-
-      els.category2Select.addEventListener("change", applyFilters);
-      els.resetFiltersBtn.addEventListener("click", resetFilters);
-
-      els.cardViewBtn.addEventListener("click", () => setView("card"));
-      els.mapViewBtn.addEventListener("click", () => setView("map"));
-    }
-
-    function useRows(rows) {
-      rawItems = rows.map(parseItem).filter((it) => !!it.name);
-      categoryMap = buildCategoryMap(rawItems);
-      updateCategory1Options();
-      applyFilters();
-
-      if (!rawItems.length) {
-        setStatus("表示できるデータが見つかりませんでした。");
-        return;
+      if (els.languageSelect) {
+        els.languageSelect.addEventListener("change", event => {
+          if (event.target.value) window.location.href = event.target.value;
+        });
       }
 
-      clearStatus();
+      els.keywordInput.addEventListener("input", applyFilters);
+      els.citySelect.addEventListener("change", applyFilters);
+      els.category1Select.addEventListener("change", applyFilters);
+      els.areaSelect.addEventListener("change", applyFilters);
+      els.resetFiltersBtn.addEventListener("click", resetFilters);
+      els.cardViewBtn.addEventListener("click", () => setView("card"));
+      els.mapViewBtn.addEventListener("click", () => setView("map"));
     }
 
     async function init() {
@@ -1689,33 +1535,26 @@
       setStatus("データを読み込んでいます...");
 
       try {
-        const payload = await fetchJson(API_URL);
-        const rows = normalizeIncomingPayload(payload);
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const payload = await res.json();
+        const rows = normalizePayload(payload);
 
-        if (!rows.length) {
-          rawItems = [];
-          filteredItems = [];
-          categoryMap = {};
-          updateCategory1Options();
-          renderSummary();
-          renderCards();
-          setStatus("Spreadsheetに表示できるmedicalデータが見つかりませんでした。", true);
-          return;
+        rawItems = rows.map(parseItem).filter(item => item.name && item.name !== "名称未設定");
+
+        populateFilters();
+        applyFilters();
+
+        if (!rawItems.length) {
+          setStatus("表示できるmedicalデータがありません。Spreadsheetのmedicalシートを確認してください。", true);
         }
-
-        useRows(rows);
       } catch (error) {
         console.error(error);
         rawItems = [];
         filteredItems = [];
-        categoryMap = {};
-        updateCategory1Options();
         renderSummary();
         renderCards();
-        setStatus(
-          "データの読み込みに失敗しました。<br>API URL、Apps Scriptの公開設定、またはmedicalシートの列名を確認してください。",
-          true
-        );
+        setStatus("データの読み込みに失敗しました。API URL、Apps Script、medicalシートを確認してください。", true);
       }
     }
 
