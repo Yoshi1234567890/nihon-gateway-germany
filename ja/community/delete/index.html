@@ -1,50 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>投稿削除</title><script>
-(function () {
-  var segments = location.pathname.split('/').filter(Boolean);
-  if (segments.length && /\.html$/i.test(segments[segments.length - 1])) segments.pop();
-
-  var localeIndex = -1;
-  for (var i = 0; i < segments.length; i++) {
-    if (segments[i] === 'ja' || segments[i] === 'de') { localeIndex = i; break; }
-  }
-
-  var depth = localeIndex >= 0 ? (segments.length - localeIndex) : Math.max(segments.length - 1, 0);
-  var prefix = depth === 0 ? './' : '../'.repeat(depth);
-
-  var css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = prefix + 'assets/css/cookie-consent.css';
-  document.head.appendChild(css);
-
-  var js = document.createElement('script');
-  js.src = prefix + 'assets/js/cookie-consent.js';
-  js.defer = true;
-  document.head.appendChild(js);
-})();
-</script>
-</head>
-<body style="font-family:Arial,sans-serif;max-width:760px;margin:auto;padding:40px;background:#fdf8f2">
-  <h1>投稿削除</h1>
-  <p id="msg">処理中...</p>
-  <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwvGmCKVjbWak1xmqU3li33sS_eSx-g5eZU9NUPUYA_9YD7E2NmwUHe9a0SrG6YFBZt/exec';
-    (async function() {
-      const token = new URLSearchParams(location.search).get('token') || '';
-      const el = document.getElementById('msg');
-      if (!token) {
-        el.textContent = '無効なリンクです。';
-        return;
-      }
-      try {
-        const res = await fetch(GAS_URL + '?action=deletePostByToken&token=' + encodeURIComponent(token));
-        const data = await res.json();
-        el.textContent = data.ok ? '投稿を削除しました。' : '削除に失敗しました。';
-      } catch (e) {
-        el.textContent = '削除に失敗しました。';
-      }
-    })();
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>投稿削除 | Nihon Gateway Germany</title><link rel="icon" type="image/jpeg" href="../../assets/images/brand/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
+:root{--cream:#fdf8f2;--ink:#1a1014;--muted:#6b5e68;--border:#ede5e0;--card-shadow:0 10px 30px rgba(26,16,20,.07);--max:1280px;--brand:#d84b6a;--hover-pink:#f3c8d4;--hover-pink-bg:#fff4f7}
+*{box-sizing:border-box;margin:0;padding:0} body{font-family:'Outfit','Noto Sans JP',sans-serif;background:linear-gradient(rgba(247,248,250,.78), rgba(247,248,250,.82)),url('../../assets/images/brand/site-bg.jpg') center top/cover fixed no-repeat,var(--cream);color:var(--ink);line-height:1.6}
+.container{width:min(var(--max), calc(100% - 32px));margin:0 auto}.site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.84);backdrop-filter:blur(12px);border-bottom:1px solid rgba(230,234,240,.92)}
+.header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:inherit}.brand-logo{width:120px;height:70px;object-fit:contain}.brand-title{display:block;font-size:14px;font-weight:800;letter-spacing:.08em;line-height:1.1}.brand-sub{display:block;margin-top:4px;font-size:12px;color:var(--muted)}
+.header-nav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.header-nav a{text-decoration:none;font-size:14px;font-weight:600;color:#34414d;padding:8px 12px;border-radius:999px;border:1px solid #dce4ee;background:rgba(255,255,255,.74)}
+.header-nav a:hover{color:var(--brand);border-color:var(--hover-pink);background:var(--hover-pink-bg)}
+.wrap{width:min(980px,calc(100% - 32px));margin:26px auto 56px}.panel{background:#fff;border:1.5px solid var(--border);border-radius:22px;box-shadow:var(--card-shadow);padding:22px}
+.page-footer{width:min(var(--max), calc(100% - 32px));margin:0 auto 24px;border:1px solid #dce4ee;border-radius:20px;background:linear-gradient(135deg,#fbfdff,#f6f9fc);box-shadow:0 16px 34px rgba(19,35,58,.10);padding:24px}.footer-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;flex-wrap:wrap}.footer-left{display:flex;gap:16px;align-items:flex-start;min-width:280px}.footer-logo{width:112px;height:112px;object-fit:contain}.footer-title{font-size:14px;font-weight:800;letter-spacing:.08em}.footer-sub,.footer-meta{color:var(--muted);font-size:13px}.footer-links{display:flex;gap:8px;flex-wrap:wrap}.footer-links a{font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid #e2e8f0;color:#34414d;text-decoration:none}
+</style>
+<script>(function(){var s=location.pathname.split('/').filter(Boolean);if(s.length&&/\.html$/i.test(s[s.length-1]))s.pop();var i=s.indexOf('ja');if(i<0)i=s.indexOf('de');var d=i>=0?(s.length-i):Math.max(s.length-1,0);var p=d===0?'./':'../'.repeat(d);var c=document.createElement('link');c.rel='stylesheet';c.href=p+'assets/css/cookie-consent.css';document.head.appendChild(c);var j=document.createElement('script');j.src=p+'assets/js/cookie-consent.js';j.defer=true;document.head.appendChild(j);})();</script></head><body><header class="site-header"><div class="container header-inner"><a class="brand" href="/nihon-gateway-germany/ja/" aria-label="Nihon Gateway Germany ホーム"><img class="brand-logo" src="../../assets/images/brand/logo_header.png" alt="Nihon Gateway Germany ヘッダーロゴ" /><span><span class="brand-title">NIHON GATEWAY GERMANY</span><span class="brand-sub">ドイツと日本をつなぐ総合ポータル</span></span></a><nav class="header-nav" aria-label="メインナビゲーション"><a href="/nihon-gateway-germany/ja/">ホーム</a><a href="/nihon-gateway-germany/ja/about/">このサイトについて</a><a href="/nihon-gateway-germany/ja/community/">交流・掲示板</a></nav></div></header><main class="wrap"><div class="panel"><h1>投稿削除</h1><p id="msg">処理中...</p></div></main><footer class="page-footer"><div class="footer-inner"><div class="footer-left"><img class="footer-logo" src="../../assets/images/brand/logo_footer.png" alt="Nihon Gateway Germany フッターロゴ"><div><p class="footer-title">NIHON GATEWAY GERMANY</p><p class="footer-sub">ドイツと日本をつなぐ総合ポータル</p><p class="footer-meta">© 2026 Nihon Gateway Germany</p></div></div><div class="footer-links"><a href="/nihon-gateway-germany/ja/">ホーム</a><a href="/nihon-gateway-germany/ja/privacy/">プライバシー</a></div></div></footer><script>const GAS_URL='https://script.google.com/macros/s/AKfycbwvGmCKVjbWak1xmqU3li33sS_eSx-g5eZU9NUPUYA_9YD7E2NmwUHe9a0SrG6YFBZt/exec';(async function(){const token=new URLSearchParams(location.search).get('token')||'';const el=document.getElementById('msg');if(!token){el.textContent='無効なリンクです。';return;}try{const res=await fetch(GAS_URL+'?action=deletePostByToken&token='+encodeURIComponent(token));const data=await res.json();el.textContent=data.ok?'投稿を削除しました。':'削除に失敗しました。';}catch(e){el.textContent='削除に失敗しました。';}})();</script></body></html>
