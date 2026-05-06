@@ -2,12 +2,19 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="../../assets/images/brand/favicon.png">
   <title>通報する | Nihon Gateway Germany</title>
   <style>
-    body{font-family:Arial,sans-serif;max-width:760px;margin:auto;padding:24px;background:#fdf8f2}
+    body{font-family:Arial,sans-serif;max-width:760px;margin:auto;padding:24px;background:linear-gradient(rgba(247,248,250,.78), rgba(247,248,250,.82)), url("../../assets/images/brand/site-bg.jpg") center top / cover fixed no-repeat,#fdf8f2}
     form{background:#fff;border:1px solid #ddd;border-radius:16px;padding:18px}
     input,textarea,select{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:10px}
     button{padding:12px 18px;border:none;border-radius:10px;background:#111;color:#fff}
+  
+    .container{width:min(1280px,calc(100% - 32px));margin:0 auto}
+    .site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.84);backdrop-filter:blur(12px);border-bottom:1px solid rgba(230,234,240,.92)}
+    .header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}.brand-logo{width:120px;height:70px;object-fit:contain}.brand-title{font-size:14px;font-weight:800;letter-spacing:.08em}.brand-sub{display:block;font-size:12px;color:#6b5e68}
+    .header-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.header-nav a,.header-language{font-size:14px;text-decoration:none;color:#34414d;padding:8px 12px;border-radius:999px;border:1px solid #dce4ee;background:rgba(255,255,255,.74)}
+    .page-footer{margin:22px auto 28px;max-width:980px;text-align:center;color:#6b5e68}
   </style>
 <script>
 (function () {
@@ -35,6 +42,7 @@
 </script>
 </head>
 <body>
+<header class="site-header"><div class="container header-inner"><a class="brand" href="/nihon-gateway-germany/ja/"><img class="brand-logo" src="../../assets/images/brand/logo_header.png" alt="logo"><span><span class="brand-title">NIHON GATEWAY GERMANY</span><span class="brand-sub">ドイツと日本をつなぐ総合ポータル</span></span></a><div class="header-actions"><nav class="header-nav"><a href="/nihon-gateway-germany/ja/">ホーム</a><a href="/nihon-gateway-germany/ja/about/">このサイトについて</a></nav><a class="header-language" href="/nihon-gateway-germany/de/community/">DE</a></div></div></header>
   <a href="../">← 掲示板一覧へ戻る</a>
   <h1>投稿を通報する</h1>
   <form id="reportForm">

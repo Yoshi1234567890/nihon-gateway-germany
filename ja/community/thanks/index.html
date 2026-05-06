@@ -1,33 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>送信完了</title><script>
-(function () {
-  var segments = location.pathname.split('/').filter(Boolean);
-  if (segments.length && /\.html$/i.test(segments[segments.length - 1])) segments.pop();
-
-  var localeIndex = -1;
-  for (var i = 0; i < segments.length; i++) {
-    if (segments[i] === 'ja' || segments[i] === 'de') { localeIndex = i; break; }
-  }
-
-  var depth = localeIndex >= 0 ? (segments.length - localeIndex) : Math.max(segments.length - 1, 0);
-  var prefix = depth === 0 ? './' : '../'.repeat(depth);
-
-  var css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = prefix + 'assets/css/cookie-consent.css';
-  document.head.appendChild(css);
-
-  var js = document.createElement('script');
-  js.src = prefix + 'assets/js/cookie-consent.js';
-  js.defer = true;
-  document.head.appendChild(js);
-})();
-</script>
-</head>
-<body style="font-family:Arial,sans-serif;max-width:760px;margin:auto;padding:40px;background:#fdf8f2">
-  <h1>送信ありがとうございました</h1>
-  <p>内容を受け付けました。</p>
-  <p><a href="./index.html">掲示板トップへ戻る</a></p>
-</body>
-</html>
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>送信完了 | Nihon Gateway Germany</title>
+  <link rel="icon" type="image/jpeg" href="../../assets/images/brand/favicon.png">
+  <style>
+    body{margin:0;font-family:'Outfit','Noto Sans JP',sans-serif;background:linear-gradient(rgba(247,248,250,.78),rgba(247,248,250,.82)),url('../../assets/images/brand/site-bg.jpg') center top / cover fixed no-repeat,#fdf8f2;color:#1a1014}
+    .container{width:min(1280px,calc(100% - 32px));margin:0 auto}.site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.84);backdrop-filter:blur(12px);border-bottom:1px solid rgba(230,234,240,.92)}
+    .header-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}.brand-logo{width:120px;height:70px;object-fit:contain}.brand-title{font-size:14px;font-weight:800;letter-spacing:.08em}.brand-sub{display:block;font-size:12px;color:#6b5e68}
+    .header-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.header-nav a,.header-language,.header-category{font-size:14px;text-decoration:none;color:#34414d;padding:8px 12px;border-radius:999px;border:1px solid #dce4ee;background:rgba(255,255,255,.74)}.header-category-menu{position:relative}.header-category-trigger{border:none;background:transparent;font-weight:700}.category-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:220px;background:#fff;border:1px solid #e6eaf0;border-radius:14px;padding:8px}.header-category-menu:hover .category-dropdown{display:grid}
+    .category-dropdown a{padding:8px 10px;text-decoration:none;color:#2f3e4c}.wrap{max-width:760px;margin:32px auto;padding:24px;background:#fff;border:1px solid #dce4ee;border-radius:20px}
+    .footer{margin:24px auto 32px;max-width:760px;padding:16px;color:#6b5e68;text-align:center}
+  </style>
+</head><body>
+<header class="site-header"><div class="container header-inner"><a class="brand" href="/nihon-gateway-germany/ja/"><img class="brand-logo" src="../../assets/images/brand/logo_header.png"><span><span class="brand-title">NIHON GATEWAY GERMANY</span><span class="brand-sub">ドイツと日本をつなぐ総合ポータル</span></span></a><div class="header-actions"><nav class="header-nav"><a href="/nihon-gateway-germany/ja/">ホーム</a><a href="/nihon-gateway-germany/ja/about/">このサイトについて</a></nav><a class="header-language" href="/nihon-gateway-germany/de/community/">DE</a></div></div></header>
+<div class="wrap"><h1>送信ありがとうございました</h1><p>内容を受け付けました。</p><p><a href="../">掲示板トップへ戻る</a></p></div>
+<footer class="footer">© Nihon Gateway Germany</footer>
+</body></html>
